@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 class Posts extends Component {
     constructor(){
@@ -9,6 +10,13 @@ class Posts extends Component {
         }
     }
 
+    componentDidMount() {
+        if (!this.props.user_id || this.props.user_id === 0) {
+            window.location = '/#/login'
+        }
+    }
+
+
     render(){
         return (
             <div>
@@ -18,4 +26,11 @@ class Posts extends Component {
     }
 }
 
-export default Posts
+function mapStateToProps(state) {
+    console.log(state)
+  return {
+    user_id: state.user_id
+  }
+}
+
+export default connect(mapStateToProps)(Posts);

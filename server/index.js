@@ -2,14 +2,16 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
-const axios = require('axios');
+// const axios = require('axios');
 const massive = require('massive');
 const bodyParser = require('body-parser');
-const c = require('./controller');
+// const bcrypt = require('bcryptjs');
+const authController = require('./controllers/auth_controller');
+const albumController = require('./controllers/album_controller');
+const postController = require('./controllers/post_controller');
 
 // Initialize express app
 const app = express();
-
 // destructure from process.env
 const {
     SERVER_PORT,
@@ -38,10 +40,22 @@ app.use((req, res, next) => {
     next();
 })
 
+// /auth
+app.post(`/auth/login`, authController.login)
+app.post(`/auth/register`, authController.register)
+app.put(`/api/users/:user_id`, authController.editUser)
 
-app.post(`/auth/login`, c.login)
-app.post(`/auth/register`, c.register)
-app.get(`/api/post/:post_id`, c.getPost)
+// /api/post
+app.get(`/api/posts`, postController.getAllPosts)
+app.get(`/api/post/:post_id`, postController.getPost)
+app.post(`/api/post`, postController.newPost)
+app.put(`/api/post/:post_id`, postController.editPost)
+app.delete(`/api/post/:post_id`, postController.deletePost)
+
+// /api/album
+app.get(`/api/photos`, albumController.getPhotos)
+app.post(`/api/photos`, albumController.addPhoto)
+app.delete(`/api/photos/:photo_id`, albumController.deletePhoto)
 
 // listen
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`))
