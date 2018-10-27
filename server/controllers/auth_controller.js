@@ -26,7 +26,7 @@ module.exports = {
                 }
                 // Passwords match
                 req.session.user = user;
-        console.log(req.session.user)
+                console.log(req.session.user)
                 res.status(200).send(req.session.user)
             } else {
                 // Passwords don't match
@@ -48,7 +48,6 @@ module.exports = {
             .catch((err) => {
                 console.log(err)
             })
-        console.log(email)
         if (foundUser[0]) {
 
             res.status(200).send('A user with that email already exists. Register with a different email.')
@@ -62,20 +61,36 @@ module.exports = {
                 .catch((err) => {
                     console.log(err)
                 })
-                let user = {
-                    user_id: createdCust[0].user_id,
-                    email: createdCust[0].email,
-                    profile_pic: createdCust[0].profile_pic,
-                    isadmin: createdCust[0].isadmin,
-                    approved: createdCust[0].approved,
-                    display_name: createdCust[0].display_name,
-                }
+            let user = {
+                user_id: createdCust[0].user_id,
+                email: createdCust[0].email,
+                profile_pic: createdCust[0].profile_pic,
+                isadmin: createdCust[0].isadmin,
+                approved: createdCust[0].approved,
+                display_name: createdCust[0].display_name,
+            }
             req.session.user = user;
             res.status(200).send(req.session.user)
         }
 
     },
     editUser: async (req, res) => {
-
+        if (req.session.user && req.session.user.isadmin === true) {
+            
+            res.sendStatus(200)
+        } else {
+            res.status(401).send('not authorized')
+        }
+    },
+    sendUser: async (req, res) => {
+        if (req.session.user) {
+            res.status(200).send(req.session.user)
+        } else {
+            res.status(401).send(`Go log in`)
+        }
+    },
+    logout: async (req, res) => {
+        req.session.destroy();
+        res.sendStatus(200)
     }
 }

@@ -10,20 +10,49 @@ import NewPost from './components/Posts/NewPost'
 import Nav from './components/Nav/Nav'
 import { HashRouter, Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { updateUser, logout } from './ducks/reducer'
+import axios from 'axios'
 
 class App extends Component {
+  constructor() {
+    super()
+    this.logout = this.logout.bind(this)
+  }
+  componentDidMount() {
+    if (this.props.user_id === 0) {
+      axios.get(`/api/user-data`)
+        .then((response) => {
+          this.props.updateUser(response.data)
+        })
+        .catch(() => {
+          window.location = '/#/login'
+        })
+    }
+  }
+
+  logout() {
+    axios.get(`/auth/logout`)
+      .then(() => {
+        this.props.logout()
+        window.location = '/#/login'
+      })
+  }
+
   render() {
     return (
       <HashRouter>
         <div>
+          <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+          <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+
           {
             this.props.user_id > 0 ?
-              <Nav />
+              <Nav logout={this.logout} />
               :
               <div></div>
 
           }
-          
+
           <Switch>
             <Route exact path='/' component={Posts} />
             <Route path='/post/:post_id' component={Post} />
@@ -45,4 +74,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { updateUser, logout })(App);

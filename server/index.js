@@ -5,6 +5,7 @@ const session = require('express-session');
 // const axios = require('axios');
 const massive = require('massive');
 const bodyParser = require('body-parser');
+const aws = require('aws-sdk');
 // const bcrypt = require('bcryptjs');
 const authController = require('./controllers/auth_controller');
 const albumController = require('./controllers/album_controller');
@@ -16,10 +17,48 @@ const app = express();
 const {
     SERVER_PORT,
     CONNECTION_STRING,
-    SECRET
+    SECRET,
+    S3_BUCKET,
+    AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY
 } = process.env;
 
 app.use(bodyParser.json());
+
+//s3 upload control
+app.get('/sign-s3', (req, res) => {
+
+    aws.config = {
+      region: 'us-west-1',
+      accessKeyId: AWS_ACCESS_KEY_ID,
+      secretAccessKey: AWS_SECRET_ACCESS_KEY
+    }
+    
+    const s3 = new aws.S3();
+    const fileName = req.query['file-name'];
+    const fileType = req.query['file-type'];
+    const s3Params = {
+      Bucket: S3_BUCKET,
+      Key: fileName,
+      Expires: 60,
+      ContentType: fileType,
+      ACL: 'public-read'
+    };
+  
+    s3.getSignedUrl('putObject', s3Params, (err, data) => {
+      if(err){
+        console.log(err);
+        return res.end();
+      }
+      const returnData = {
+        signedRequest: data,
+        url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+      };
+  
+      return res.send(returnData)
+    });
+  });
+
 // connect to DB
 massive(CONNECTION_STRING)
     .then(dbInstance => {
@@ -44,6 +83,8 @@ app.use((req, res, next) => {
 app.post(`/auth/login`, authController.login)
 app.post(`/auth/register`, authController.register)
 app.put(`/api/users/:user_id`, authController.editUser)
+app.get('/api/user-data', authController.sendUser)
+app.get('/auth/logout', authController.logout)
 
 // /api/post
 app.get(`/api/posts`, postController.getAllPosts)

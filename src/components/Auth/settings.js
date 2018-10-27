@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import noImg from '../../images/noImage.jpg'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import { updateUser } from '../../ducks/reducer'
 
-class Register extends Component {
+class Settings extends Component {
     constructor() {
         super()
         this.state = {
@@ -11,6 +14,10 @@ class Register extends Component {
             password: '',
             email: ''
         }
+    }
+
+    componentDidMount() {
+        
     }
 
     handleUpdateUsername(value) {
@@ -62,4 +69,4 @@ class Register extends Component {
     }
 }
 
-export default Register
+export default Settings

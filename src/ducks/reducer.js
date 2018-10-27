@@ -11,6 +11,7 @@ const initialState = {
 
 // types
 const UPDATE_USER = 'UPDATE_USER';
+const LOGOUT = 'LOGOUT';
 
 // action creators
 export function updateUser(data) {
@@ -20,10 +21,15 @@ export function updateUser(data) {
     }
 }
 
+export function logout(data) {
+    return {
+        type: LOGOUT
+    }
+}
+
 // reducer
 export default function reducer(state = initialState, action) {
     let { payload, type } = action;
-    console.log(type)
     switch (type) {
         case UPDATE_USER:
             return Object.assign({}, state, {
@@ -33,6 +39,15 @@ export default function reducer(state = initialState, action) {
                 email: payload.email,
                 approved: payload.approved,
                 isadmin: payload.isadmin
+            });
+        case LOGOUT:
+            return Object.assign({}, state, {
+                display_name: initialState.display_name,
+                profile_pic: initialState.profile_pic,
+                user_id: initialState.user_id,
+                email: initialState.email,
+                approved: initialState.approved,
+                isadmin: initialState.isadmin
             });
         default:
             return state;

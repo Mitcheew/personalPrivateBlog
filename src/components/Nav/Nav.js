@@ -12,7 +12,8 @@ function Nav(props) {
                     <Link to='/'>Posts</Link>
                     <Link to='/album'>Album</Link>
                     <Link to='/'>Account Settings</Link>
-                    <p>{props.name}</p>
+                    <button onClick={props.logout}>Logout</button>
+                    <p>{props.display_name}</p>
                     <img src={props.profile_pic} alt=""/>
                 </div>
                 :
