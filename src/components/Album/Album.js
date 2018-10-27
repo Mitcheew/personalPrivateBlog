@@ -45,7 +45,10 @@ class Album extends Component {
         let photoReel = this.state.photos.map(photo => {
             return (
                 <div key={photo.photo_id}>
-                    <img src={photo.image} alt="" />
+                    <img style={{
+                        maxHeight: "350px"
+                    }}
+                    src={photo.image} alt="" />
                 </div>
             )
         })

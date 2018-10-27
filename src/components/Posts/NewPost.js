@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 import { v4 as randomString } from 'uuid'
 import Dropzone from 'react-dropzone'
 import { GridLoader } from 'react-spinners'
@@ -7,12 +8,15 @@ import { GridLoader } from 'react-spinners'
 class NewPost extends Component {
     constructor() {
         super()
+        let today = new Date(),
+        date = (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getFullYear();
+        console.log(date)
         this.state = {
             title: '',
             image: [],
             content: '',
-            // publish: false,
-            post_date: '',
+            publish: false,
+            post_date: date,
             isUploading: false,
             url: 'http://via.placeholder.com/450x450',
             value: ''
@@ -30,12 +34,6 @@ class NewPost extends Component {
         })
     }
 
-    handleUpdateImage(value) {
-        this.setState({
-            display_name: value
-        })
-    }
-
     handleContentChange(value) {
         this.setState({
             content: value
@@ -43,10 +41,12 @@ class NewPost extends Component {
     }
 
     handleNewPost() {
-        let { title, image, content, post_date } = this.state;
-        axios.post(`/api/post`, { title, image, content, post_date })
+        let { title, image, content, post_date, publish } = this.state;
+        let { user_id } = this.props
+        axios.post(`/api/post`, { title, image, content, publish, post_date, user_id })
             .then(response => {
-                window.location = `/#/post/${response.data.postID}`
+                console.log(response.data)
+                window.location = `/#/post/${response.data.postId}`
             })
     }
 
@@ -59,7 +59,7 @@ class NewPost extends Component {
         })
     }
 
-    getSignedRequest(file){
+    getSignedRequest(file) {
         console.log(file)
         this.setState({ isUploading: true })
         // We are creating a file name that consists of a random string, and the name of the file that was just uploaded with the spaces removed and hyphens inserted instead. This is done using the .replace function with a specific regular expression. This will ensure that each file uploaded has a unique name which will prevent files from overwriting other files due to duplicate names.
@@ -114,10 +114,11 @@ class NewPost extends Component {
                 <li key={i}>{image}</li>
             )
         })
+        console.log(this.props.user_id)
         return (
             <div>
                 Title:
-                <input onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
+                <input onChange={(e) => { this.handleTitleChange(e.target.value) }} value={this.state.email} />
                 Images:
                 <Dropzone
                     onDropAccepted={this.mapAccepted}
@@ -148,10 +149,17 @@ class NewPost extends Component {
                 </ol>
                 Content:
                 <input onChange={(e) => { this.handleContentChange(e.target.value) }} value={this.state.displayName} />
-                <button onClick={() => { this.handleRegistration() }}>Post</button>
+                <button onClick={() => { this.handleNewPost() }}>Post</button>
             </div>
         )
     }
 }
 
-export default NewPost
+function mapStateToProps(state) {
+    console.log(state)
+    return {
+        user_id: state.user_id
+    }
+}
+
+export default connect(mapStateToProps)(NewPost)

@@ -5,7 +5,6 @@ module.exports = {
     getAllPosts: async (req, res) => {
         const dbInstance = req.app.get('db')
         let foundPosts = await dbInstance.get_all_posts()
-        console.log(foundPosts)
         res.status(200).send(foundPosts)
 
     },
@@ -14,21 +13,20 @@ module.exports = {
         const dbInstance = req.app.get('db')
         let postPhotos = await dbInstance.get_post_photos([post_id])
         let foundPost = await dbInstance.get_post([post_id])
-        console.log(foundPost)
         res.status(200).send({ foundPost, postPhotos })
 
     },
     newPost: async (req, res) => {
-        let { title, published, content, user_id, post_date, image } = req.body
+        let { title, publish, content, user_id, post_date, image } = req.body
         const dbInstance = req.app.get('db')
         
         if (req.session.user && req.session.user.isadmin === true) {
-            let new_post = await dbInstance.new_post([title, published, content, user_id, post_date])
+            let new_post = await dbInstance.new_post([title, publish, content, user_id, post_date])
             let postId = new_post[0].post_id;
             image.forEach((images) => {
                 dbInstance.add_photo([images, postId, user_id])
             })
-            res.status(200).send(postId)
+            res.status(200).send({postId})
         } else {
             res.status(401).send('not authorized')
         }

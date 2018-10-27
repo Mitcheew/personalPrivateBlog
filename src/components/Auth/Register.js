@@ -14,7 +14,8 @@ class Register extends Component {
             display_name: '',
             profile_pic: noImg,
             password: '',
-            email: ''
+            email: '',
+            url: ''
         }
     }
 
@@ -95,7 +96,7 @@ class Register extends Component {
     
         axios.put(signedRequest, file, options)
         .then( response => {
-          this.setState({isUploading: false, url: url})
+          this.setState({isUploading: false, profile_pic: url, url: url})
           // THEN DO SOMETHING WITH THE URL. SEND TO DB USING POST REQUEST OR SOMETHING
         })
         .catch( err => {

@@ -4,7 +4,6 @@ module.exports = {
     getPhotos: async (req, res) => {
         const dbInstance = req.app.get('db')
         let photos = await dbInstance.get_all_photos()
-        console.log(photos)
         res.status(200).send(photos)
     },
     addPhoto: async (req, res) => {
