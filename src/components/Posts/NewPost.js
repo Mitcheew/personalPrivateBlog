@@ -9,8 +9,7 @@ class NewPost extends Component {
     constructor() {
         super()
         let today = new Date(),
-        date = (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getFullYear();
-        console.log(date)
+            date = (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getFullYear();
         this.state = {
             title: '',
             image: [],
@@ -114,11 +113,14 @@ class NewPost extends Component {
                 <li key={i}>{image}</li>
             )
         })
-        console.log(this.props.user_id)
         return (
             <div>
-                Title:
+                <div className='input-box'>
+                    Title:
                 <input onChange={(e) => { this.handleTitleChange(e.target.value) }} value={this.state.email} />
+
+                </div>
+
                 Images:
                 <Dropzone
                     onDropAccepted={this.mapAccepted}
@@ -147,8 +149,10 @@ class NewPost extends Component {
                 <ol>
                     {imageList}
                 </ol>
+                <div className='input-box'>
                 Content:
-                <input onChange={(e) => { this.handleContentChange(e.target.value) }} value={this.state.displayName} />
+                <textarea onChange={(e) => { this.handleContentChange(e.target.value) }} value={this.state.displayName} />
+                </div>
                 <button onClick={() => { this.handleNewPost() }}>Post</button>
             </div>
         )
@@ -156,7 +160,6 @@ class NewPost extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         user_id: state.user_id
     }

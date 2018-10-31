@@ -1,0 +1,171 @@
+// TABLE OF CONTENTS
+
+// 1. reset
+// 2. colors
+// 3. mixins
+// 4. functions
+// 5. globals
+
+
+// ===== 1. RESET =====//
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+// ===== 2. COLORS ===== //
+
+$light: #EEE;
+$medium: #999;
+$dark: #222;
+
+$font-color: #444;
+
+// ===== 3. MIXINS ===== //
+
+@mixin shadow($color) {
+    -webkit-box-shadow: 6px 6px 40px -2px  $color;
+    -moz-box-shadow: 6px 6px 40px -2px  $color;
+    box-shadow: 6px 6px 40px -2px  $color;
+	}
+@mixin flexo($flex-direction: row, $justify-content: center, $align-items: center){
+	display: flex;
+	flex-direction: $flex-direction;
+	justify-content: $justify-content;
+	align-items: $align-items;
+}
+  
+// ===== 4. FUNCTIONS ===== //
+
+
+// ===== 5. GLOBALS ===== //
+@import url('https://fonts.googleapis.com/css?family=Oswald:700');
+h1 {
+  font: {
+    family: 'Oswald', sans-serif;
+		size: 36px;
+  }
+		margin: 5px auto;
+}
+h2 {
+  font: {
+    family: 'Oswald', sans-serif;
+		size: 24px;
+  }
+		margin: 5px auto;
+
+}
+
+
+p, a, div, button {
+  font: {
+    family: 'Open Sans', sans-serif;
+    size: 16px;
+  }
+}
+
+button{
+	background-color: $light;
+	border-radius: 5px;
+	padding: 2px 10px;
+	margin: 10px 0px
+}
+
+body {
+  background: $light;
+}
+.profile_pic {
+	width: 30px;
+	border-radius: 25%;
+}
+.Dropzone {
+	width: 100px;
+	height: 100px;
+	border-width: 3px;
+	margin-top: 10px;
+	border-color: rgb(102, 102, 102);
+	border-style: solid;
+	border-radius: 5px;
+	@include flexo();
+	font-size: 28px;
+
+}
+.center-slide {
+	position: relative;
+	@include flexo(row, center, center);
+}
+.post-info {
+	@include flexo(row, space-between, center);
+	p {
+		@include flexo(row, space-between, center);
+		color: black;
+		text-decoration: none;
+	}
+		img {
+			position: relative;
+			margin-right: 3px;
+		}
+}
+.post-container {
+	background-color: $medium;
+	margin-top: 15px;
+	border: 2px black solid;
+	border-radius: 7px;
+}
+.input-box {
+		input {
+				border: 1px solid $medium;
+				margin-bottom: 5px;
+				padding: .3em .5em;
+				border-radius: 5px;
+				overflow: hidden;
+		}
+		textarea {
+			width: 250px;
+			height: 150px;
+			max-width: 250px;
+			max-height: 200px;
+
+		}
+}

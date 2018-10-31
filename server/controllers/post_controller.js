@@ -35,8 +35,6 @@ module.exports = {
         let { title, content } = req.body
         let { post_id } = req.params
         const dbInstance = req.app.get('db')
-        let editPost = await dbInstance.edit_post([ post_id, title, content ])
-        res.status(200).send(editPost)
         if (req.session.user && req.session.user.isadmin === true) {
             let editPost = await dbInstance.edit_post([ post_id, title, content ])
             res.status(200).send(editPost)

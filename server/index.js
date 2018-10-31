@@ -82,9 +82,12 @@ app.use((req, res, next) => {
 // /auth
 app.post(`/auth/login`, authController.login)
 app.post(`/auth/register`, authController.register)
-app.put(`/api/users/:user_id`, authController.editUser)
+app.put(`/api/users/`, authController.editUser)
 app.get('/api/user-data', authController.sendUser)
 app.get('/auth/logout', authController.logout)
+app.get('/api/users', authController.getUsers)
+app.put('/api/permissions', authController.approveUser)
+app.put('/api/makeAdmin', authController.makeUserAdmin)
 
 // /api/post
 app.get(`/api/posts`, postController.getAllPosts)

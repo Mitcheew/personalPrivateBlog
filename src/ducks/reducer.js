@@ -1,8 +1,6 @@
-import noImg from '../images/noImage.jpg'
-
 const initialState = {
     display_name: '',
-    profile_pic: noImg,
+    profile_pic: '',
     user_id: 0,
     email: '',
     approved: false,
