@@ -13,6 +13,7 @@ const postController = require('./controllers/post_controller');
 
 // Initialize express app
 const app = express();
+app.use( express.static( `${__dirname}/../public` ) );
 // destructure from process.env
 const {
     SERVER_PORT,
