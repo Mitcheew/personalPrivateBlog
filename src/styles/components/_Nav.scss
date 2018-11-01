@@ -1,10 +1,11 @@
+@import '../globals';
 /* Position and sizing of burger button */
 .bm-burger-button {
     position: fixed;
     width: 36px;
     height: 30px;
     right: 20px;
-    top: 20px;
+    top: 12px;
   }
    
   /* Color/shape of burger icon bars */
@@ -28,9 +29,10 @@
    
   /* General sidebar styles */
   .bm-menu {
-    background: #373a47;
-    padding: 1.5em 1em 0;
+    background: $dark;
+    padding: 1em 1em 0;
     font-size: 1.15em;
+    overflow: scroll;
   }
    
   /* Morph shape necessary with bubble or elastic */
@@ -41,12 +43,12 @@
   /* Wrapper for item list */
   .bm-item-list {
     color: #b8b7ad;
-    padding: 0.8em;
+    padding: 0.8em 0;
+    box-sizing: border-box;
   }
    
   /* Individual item */
   .bm-item {
-    display: inline-block;
   }
    
   /* Styling of overlay */
@@ -56,22 +58,46 @@
 
   .nav-line {
     @include flexo();
-        margin-bottom: 5px;
     img {
       width: 30px;
       margin-right: 3px;
     }
-    p {
-
+    a{
+      text-decoration: none;
+      height: 29.59px;
+      margin-bottom: 5px;
     }
     button {
-        border: 1px solid $medium;
+        border: 1px solid;
         padding: .3em .5em;
         border-radius: 5px;
         overflow: hidden;
         width: 120px;
+      font-weight: bold;
     }
 
     
 
+  }
+
+  @media only screen and (min-width: 751px) {
+  .desktop-nav-wrapper {
+    height: 100%;
+    width: $side-nav;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: $dark;
+    overflow-x: hidden;
+    padding-top: 20px;
+    border-width: 3px;
+    border-right: $white;
+    p {
+      color: $light;
+    }
+    div {
+      margin-top: 10px;
+    }
+  }
   }

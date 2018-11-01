@@ -19,10 +19,10 @@ class Album extends Component {
                     photos: response.data
                 })
             })
-            this.setState({
-                nav1: this.slider1,
-                nav2: this.slider2
-            })
+        this.setState({
+            nav1: this.slider1,
+            nav2: this.slider2
+        })
     }
 
     render() {
@@ -45,29 +45,37 @@ class Album extends Component {
             )
         })
         return (
-            <div>
-                <h1>Photo Album</h1>
-                <Slider
-                    asNavFor={this.state.nav2}
-                    ref={slider => (this.slider1 = slider)}
-                    {...settings}
-                >
-                    {photoReel}
-                </Slider>
-                <Slider
-                    className='SliderPhotos'
-                    asNavFor={this.state.nav1}
-                    ref={slider => (this.slider2 = slider)}
-                    slidesToShow={photoReel.length < 5 ?
-                        photoReel.length
-                        :
-                        5
-                    }
-                    swipeToSlide={true}
-                    focusOnSelect={true}
-                >
-                    {photoReel}
-                </Slider>
+            <div className='desktop-body'>
+                <h1 className='header'>Photo Album</h1>
+                {this.state.photos.length !== 0 ?
+                <div>
+                    <Slider
+                        asNavFor={this.state.nav2}
+                        ref={slider => (this.slider1 = slider)}
+                        {...settings}
+                    >
+                        {photoReel}
+                    </Slider>
+                    <Slider
+                        className='SliderPhotos'
+                        {...settings}
+                        asNavFor={this.state.nav1}
+                        ref={slider => (this.slider2 = slider)}
+                        slidesToShow={photoReel.length < 5 ?
+                            photoReel.length
+                            :
+                            5
+                        }
+                        swipeToSlide={true}
+                        focusOnSelect={true}
+                    >
+                        {photoReel}
+                    </Slider>
+                    </div>
+            :
+                    <h1>Loading...</h1>
+                }
+
 
             </div>
         )

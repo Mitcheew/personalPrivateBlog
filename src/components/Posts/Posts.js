@@ -9,18 +9,23 @@ class Posts extends Component {
         super()
         this.state = {
             posts: [],
-            search: ''
+            search: '',
+            isPosts: true
         }
     }
 
     componentDidMount() {
         axios.get(`/api/posts`)
             .then((response) => {
-                console.log(response.data)
-                this.setState({
-                    posts: response.data
-                })
-                console.log(this.state.posts)
+                if (response.data.length > 0) {
+                    this.setState({
+                        posts: response.data,
+                    })
+                } else {
+                    this.setState({
+                        isPosts: false
+                    })
+                }
             })
 
 
@@ -30,7 +35,7 @@ class Posts extends Component {
     render() {
         let allPosts = this.state.posts.map((post) => {
             return (
-                <div key={post.post_id}>
+                <div className='flex-post-preview' key={post.post_id}>
                     <div className='post-container'>
                         <Link to={`/post/${post.post_id}`}>
                             <div className='post-info'>
@@ -41,26 +46,45 @@ class Posts extends Component {
                                 <p>Posted date: {post.post_date}</p>
                                 <p>By:  {post.display_name}</p>
                             </div>
+                            {this.props.is_desktop ?
+                                <div>
+                                    <img className='post-preview' src={post.image} alt={post.title} />
+                                </div>
+
+                                :
+                                null
+                            }
+
                         </Link>
                     </div>
 
-                    {/* <img className='profile_pic' src={post.profile_pic} alt="" /> */}
                 </div>
             )
         });
         return (
-            <div>
-                <h1>Most Recent Posts</h1>
-                {allPosts}
+            <div className='desktop-body'>
+                <h1 className='header'>Most Recent Posts</h1>
+                {this.state.posts.length > 0 ?
+                    allPosts
+                    :
+                    <div>
+                        {this.state.isPosts ?
+                            <h1 className='flex-post-preview'>Loading...</h1>
+
+                            :
+                            <h1 className='flex-post-preview'>There are no posts</h1>
+                        }
+                    </div>
+                }
             </div>
         )
     }
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
-        user_id: state.user_id
+        user_id: state.user_id,
+        is_desktop: state.is_desktop
     }
 }
 

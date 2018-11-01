@@ -42,11 +42,16 @@ class NewPost extends Component {
     handleNewPost() {
         let { title, image, content, post_date, publish } = this.state;
         let { user_id } = this.props
-        axios.post(`/api/post`, { title, image, content, publish, post_date, user_id })
-            .then(response => {
-                console.log(response.data)
-                window.location = `/#/post/${response.data.postId}`
-            })
+        if (image.length > 0 || title || content) {
+            axios.post(`/api/post`, { title, image, content, publish, post_date, user_id })
+                .then(response => {
+                    console.log(response.data)
+                    window.location = `/#/post/${response.data.postId}`
+                })
+
+        } else {
+            window.alert('Please fill everything out and include at least 1 image')
+        }
     }
 
     mapAccepted(files) {
@@ -110,51 +115,47 @@ class NewPost extends Component {
     render() {
         let imageList = this.state.image.map((image, i) => {
             return (
-                <li key={i}>{image}</li>
+                <img className='profile_pic' key={i} src={image} alt="" />
             )
         })
         return (
-            <div>
+            <div className='desktop-body'>
+                <h1 className='header'> New Post </h1>
                 <div className='input-box'>
                     Title:
-                <input onChange={(e) => { this.handleTitleChange(e.target.value) }} value={this.state.email} />
+                <input className='title' onChange={(e) => { this.handleTitleChange(e.target.value) }} value={this.state.email} />
 
                 </div>
-
                 Images:
-                <Dropzone
-                    onDropAccepted={this.mapAccepted}
-                    style={{
-                        position: 'relative',
-                        width: 200,
-                        height: 200,
-                        borderWidth: 7,
-                        marginTop: 100,
-                        borderColor: 'rgb(102, 102, 102)',
-                        borderStyle: 'dashed',
-                        borderRadius: 5,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        fontSize: 28,
-                    }}
-                    accept='image/*'
-                    multiple={true} >
+                <div className='new-post-upload'>
 
-                    {this.state.isUploading
-                        ? <GridLoader />
-                        : <p>Drop File or Click Here</p>
-                    }
-                </Dropzone>
-                <ol>
-                    {imageList}
-                </ol>
-                <div className='input-box'>
-                Content:
-                <textarea onChange={(e) => { this.handleContentChange(e.target.value) }} value={this.state.displayName} />
+                    <Dropzone
+                        className='Dropzone'
+                        onDropAccepted={this.mapAccepted}
+                        accept='image/*'
+                        multiple={true} >
+
+                        {this.state.isUploading
+                            ? <GridLoader />
+                            : <p>Drop File or Click Here</p>
+                        }
+                    </Dropzone>
+                    <ol>
+                        {imageList}
+                    </ol>
                 </div>
-                <button onClick={() => { this.handleNewPost() }}>Post</button>
+                <br />
+                <h3>Content:</h3>
+
+                <div className='input-box'>
+                    <textarea onChange={(e) => { this.handleContentChange(e.target.value) }} value={this.state.displayName} />
+                </div>
+                <div className='input-box'>
+
+                    <button onClick={() => { this.handleNewPost() }}>Post</button>
+                </div>
             </div>
+
         )
     }
 }

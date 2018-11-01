@@ -28,7 +28,6 @@ class App extends Component {
           this.props.updateUser(response.data)
         })
         .catch(() => {
-          console.log(window.location)
           if (window.location.href === window.location.origin + '/#/register') {
 
           } else {
@@ -43,7 +42,7 @@ class App extends Component {
   render() {
     return (
       <HashRouter>
-        <div>
+        <div className='app-container'>
           {/* <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
           <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" /> */}
 

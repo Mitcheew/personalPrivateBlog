@@ -1,19 +1,11 @@
 @import '../globals';
 
 .AuthContainer{
-        @include flexo(column);
-        position: relative;
-    img{
-        max-width: 300px;
-    }
-    .AuthField {
-        input {
-            border: 1px solid $medium;
-            margin-bottom: 5px;
-            padding: .3em .5em;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-    }
+    @include flexo(column);
+
+}
+.settingsContainer{
+    @include flexo(column);
+    max-width: 80vw;
 
 }

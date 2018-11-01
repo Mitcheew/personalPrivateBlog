@@ -1,7 +1,7 @@
 import { slide as Menu } from 'react-burger-menu'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { logout } from '../../ducks/reducer'
+import { logout, isDesktop } from '../../ducks/reducer'
 import axios from 'axios'
 
 class Nav extends Component {
@@ -9,9 +9,13 @@ class Nav extends Component {
         super(props)
         this.state = {
             menuOpen: false
-
         }
         this.logout = this.logout.bind(this)
+    }
+
+    componentDidMount() {
+        this.props.isDesktop();
+        window.addEventListener("resize", this.props.isDesktop);
     }
 
     handleStateChange(state) {
@@ -36,62 +40,116 @@ class Nav extends Component {
 
         return (
             <div>
-                <Menu
-                    right
-                    width={'180px'}
-                    isOpen={this.state.menuOpen}
-                    onStateChange={(state) => this.handleStateChange(state)}
-                >
-
-                    {this.props.user_id > 0
-                        ?
-                        <div>
+                {this.props.is_desktop ?
+                <div className='desktop-nav-wrapper'>
+                {this.props.user_id > 0
+                    ?
+                    <div>
+                        <div className='nav-line'>
+    
+                            <img src={this.props.profile_pic} alt="" />
+    
+                            <p>{this.props.display_name}</p>
+                        </div>
+                        <div className='nav-line'>
+    
+                            <a id="home" className="menu-item" href="/#/"><button>Home</button></a>
+                        </div>
+                        <div className='nav-line'>
+    
+                            <a id="Album" className="menu-item" href='/#/album'><button>Album</button></a>
+                        </div>
+                        {this.props.isadmin ?
                             <div className='nav-line'>
-
-                                <img src={this.props.profile_pic} alt="" />
-
-                                <p>{this.props.display_name}</p>
+    
+                                <a id="newPost" className="menu-item" href='/#/new'><button>New Post</button></a>
                             </div>
-                            <div className='nav-line'>
+                            :
+                            null
+                        }
+    
+    
+                        <div className='nav-line'>
+    
+                            <a id="settings" className="menu-item" href='/#/settings'><button>Settings</button></a>
+                        </div>
+                        <div className='nav-line'>
+                            <button onClick={this.logout}>Logout</button>
+                        </div>
+                    </div>
+                    :
+                    <div>
+                        <div className='nav-line'>
+    
+                            <a id="login" className="menu-item" href="/#/login"><button>Login</button></a>
+                        </div>
+                        <div className='nav-line'>
+    
+                            <a id="register" className="menu-item" href='/#/register'><button>Register</button></a>
+                        </div>
+    
+                    </div>
+                }
+                </div>
+            :
+            <Menu
+            right
+            width={'180px'}
+            isOpen={this.state.menuOpen}
+            onStateChange={(state) => this.handleStateChange(state)}
+        >
 
-                                <a id="home" className="menu-item" onClick={() => this.closeMenu()} href="/#/"><button>Home</button></a>
-                            </div>
-                            <div className='nav-line'>
+            {this.props.user_id > 0
+                ?
+                <div>
+                    <div className='nav-line'>
 
-                                <a id="Album" className="menu-item" onClick={() => this.closeMenu()} href='/#/album'><button>Album</button></a>
-                            </div>
-                            {this.props.isadmin ?
-                                <div className='nav-line'>
+                        <img src={this.props.profile_pic} alt="" />
 
-                                    <a id="newPost" className="menu-item" onClick={() => this.closeMenu()} href='/#/new'><button>New Post</button></a>
-                                </div>
-                                :
-                                null
-                            }
+                        <p>{this.props.display_name}</p>
+                    </div>
+                    <div className='nav-line'>
 
+                        <a id="home" className="menu-item" onClick={() => this.closeMenu()} href="/#/"><button>Home</button></a>
+                    </div>
+                    <div className='nav-line'>
 
-                            <div className='nav-line'>
+                        <a id="Album" className="menu-item" onClick={() => this.closeMenu()} href='/#/album'><button>Album</button></a>
+                    </div>
+                    {this.props.isadmin ?
+                        <div className='nav-line'>
 
-                                <a id="settings" className="menu-item" onClick={() => this.closeMenu()} href='/#/settings'><button>Settings</button></a>
-                            </div>
-                            <div className='nav-line'>
-                                <button onClick={this.logout}>Logout</button>
-                            </div>
+                            <a id="newPost" className="menu-item" onClick={() => this.closeMenu()} href='/#/new'><button>New Post</button></a>
                         </div>
                         :
-                        <div>
-                            <div className='nav-line'>
-
-                                <a id="login" className="menu-item" onClick={() => this.closeMenu()} href="/#/login"><button>Login</button></a>
-                            </div>
-                            <div className='nav-line'>
-
-                                <a id="register" className="menu-item" onClick={() => this.closeMenu()} href='/#/register'><button>Register</button></a>
-                            </div>
-
-                        </div>
+                        null
                     }
-                </Menu>
+
+
+                    <div className='nav-line'>
+
+                        <a id="settings" className="menu-item" onClick={() => this.closeMenu()} href='/#/settings'><button>Settings</button></a>
+                    </div>
+                    <div className='nav-line'>
+                        <button onClick={this.logout}>Logout</button>
+                    </div>
+                </div>
+                :
+                <div>
+                    <div className='nav-line'>
+
+                        <a id="login" className="menu-item" onClick={() => this.closeMenu()} href="/#/login"><button>Login</button></a>
+                    </div>
+                    <div className='nav-line'>
+
+                        <a id="register" className="menu-item" onClick={() => this.closeMenu()} href='/#/register'><button>Register</button></a>
+                    </div>
+
+                </div>
+            }
+        </Menu>
+
+            }
             </div>
         );
     }
@@ -102,8 +160,9 @@ function mapStateToProps(state) {
         display_name: state.display_name,
         profile_pic: state.profile_pic,
         user_id: state.user_id,
-        isadmin: state.isadmin
+        isadmin: state.isadmin,
+        is_desktop: state.is_desktop
     }
 }
 
-export default connect(mapStateToProps, { logout })(Nav)
+export default connect(mapStateToProps, { logout, isDesktop })(Nav)

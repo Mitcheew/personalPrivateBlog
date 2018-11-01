@@ -156,11 +156,11 @@ class Register extends Component {
     render() {
         const { preview } = this.state
         return (
-            <div className='AuthContainer'>
-                <img src={noImg} alt="" />
+            <div className='AuthContainer desktop-body'>
+                <img className='header' src={noImg} alt="" />
                 <h1>Ethan's Wonderful Life</h1>
                 <div className='input-box'>
-                    <input placeholder='Email' onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
+                    <input placeholder='Username or Email' onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
                 </div>
                 <div className='input-box'>
                     <input placeholder='Password' onChange={(e) => { this.handleUpdatePassword(e.target.value) }} value={this.state.password} type='password' />

@@ -4,8 +4,8 @@ import { updateUser } from '../../ducks/reducer'
 import { connect } from 'react-redux'
 import Slider from 'react-slick'
 import { v4 as randomString } from 'uuid'
-import Dropzone from 'react-dropzone'
-import { GridLoader } from 'react-spinners'
+// import Dropzone from 'react-dropzone'
+// import { GridLoader } from 'react-spinners'
 
 class Post extends Component {
     constructor() {
@@ -28,7 +28,6 @@ class Post extends Component {
 
     componentDidMount() {
         let location = this.props.location.pathname.split('/post/')
-        console.log(Number(location[1]))
         axios.get(`/api/post/${Number(location[1])}`)
             .then((response) => {
                 if (response.data.foundPost.length === 0) {
@@ -36,7 +35,6 @@ class Post extends Component {
                         exists: false
                     })
                 } else {
-                    console.log(response.data)
                     let { title, content, display_name, profile_pic, post_date } = response.data.foundPost[0];
                     let postImages = []
                     response.data.postPhotos.forEach((image, i) => {
@@ -99,13 +97,17 @@ class Post extends Component {
     }
 
     deletePost() {
-        let loc = this.props.location.pathname.split('/post/')
-        console.log(Number(loc[1]))
-        axios.delete(`/api/post/${Number(loc[1])}`)
-            .then(() => {
-                window.alert('Post successfully deleted')
-                window.location = '/'
-            })
+        let res = window.confirm("Are you sure you want to delete this post?")
+        if(res === true){
+            let loc = this.props.location.pathname.split('/post/')
+            console.log(Number(loc[1]))
+            axios.delete(`/api/post/${Number(loc[1])}`)
+                .then(() => {
+                    window.alert('Post successfully deleted')
+                    window.location = '/#/'
+                })
+    
+        }
 
     }
 
@@ -217,154 +219,168 @@ class Post extends Component {
         //     )
         // })
         return (
-            <div>
+            <div className='desktop-body'>
                 {
                     this.state.exists === true ?
-                        <div>
+                        <div className='post-container-desktop'>
                             {
-                                this.props.approved || this.props.isadmin === true ?
-                                    <div>
+                                this.state.author ?
+                                    < div >
                                         {
-                                            this.state.edit === false ?
+                                            this.props.approved || this.props.isadmin === true ?
                                                 <div>
-                                                    <div>
-                                                        <h1>{this.state.title}</h1>
-                                                        {/* admin edit and delete buttons */}
-                                                        <div>
-                                                            {
-                                                                this.props.isadmin === true ?
-                                                                    <div>
-                                                                        <button onClick={() => { this.toggleEdit() }}>Edit</button>
-                                                                        <button onClick={() => { this.deletePost() }}>Delete</button>
-                                                                    </div>
-                                                                    :
-                                                                    <div></div>
-                                                            }
-                                                        </div>
-                                                        Posted by: {this.state.author}
-                                                        <img className='profile_pic' src={this.state.profile_pic} alt="" />
-                                                    </div>
-                                                    <div>
+                                                    {
+                                                        this.state.edit === false ?
+                                                            <div>
+                                                                <div>
+                                                                    <div className='header post-info'>
 
-                                                        <Slider {...settings}
-                                                            asNavFor={this.state.nav2}
-                                                            ref={slider => (this.slider1 = slider)}>
-                                                            {photoReel}
-                                                        </Slider>
-                                                        <Slider
-                                                            className='SliderPhotos'
-                                                            asNavFor={this.state.nav1}
-                                                            ref={slider => (this.slider2 = slider)}
-                                                            slidesToShow={photoReel.length < 5 ?
-                                                                photoReel.length
+                                                                        <h1>{this.state.title}</h1>
+                                                                        {/* admin edit and delete buttons */}
+                                                                        <div>
+                                                                            {
+                                                                                this.props.isadmin === true ?
+                                                                                    <div>
+                                                                                        <button onClick={() => { this.toggleEdit() }}>Edit</button>
+                                                                                        <button onClick={() => { this.deletePost() }}>Delete</button>
+                                                                                    </div>
+                                                                                    :
+                                                                                    <div></div>
+                                                                            }
+                                                                        </div>
+                                                                        <img className='profile_pic' src={this.state.profile_pic} alt="" />
+                                                                        </div>
+                                                                        <div className='post-info'>
+                                                                            <p>Posted date: {this.state.post_date}</p>
+                                                                            <p>By:  {this.state.author}</p>
+                                                                        </div>                                                    </div>
+                                                                    <div>
+
+                                                                        <Slider {...settings}
+                                                                            asNavFor={this.state.nav2}
+                                                                            ref={slider => (this.slider1 = slider)}>
+                                                                            {photoReel}
+                                                                        </Slider>
+                                                                        <Slider
+                                                                            className='SliderPhotos'
+                                                                            asNavFor={this.state.nav1}
+                                                                            ref={slider => (this.slider2 = slider)}
+                                                                            slidesToShow={photoReel.length < 5 ?
+                                                                                photoReel.length
+                                                                                :
+                                                                                5
+                                                                            }
+                                                                            swipeToSlide={true}
+                                                                            focusOnSelect={true}
+                                                                        >
+                                                                            {photoReel}
+                                                                        </Slider>
+                                                                        <p>{this.state.content}</p>
+                                                                    </div>
+                                                                    {/* <div>
+                                                            <input />
+                                                            <button>Add Comment</button>
+                                                        </div> */}
+                                                                    <div>
+                                                                        {/* Comments section */}
+                                                                    </div>
+                                                                </div>
                                                                 :
-                                                                5
-                                                            }
-                                                            swipeToSlide={true}
-                                                            focusOnSelect={true}
-                                                        >
-                                                            {photoReel}
-                                                        </Slider>
-                                                        <p>{this.state.content}</p>
-                                                    </div>
-                                                    {/* <div>
-                                                        <input />
-                                                        <button>Add Comment</button>
-                                                    </div> */}
-                                                    <div>
-                                                        {/* Comments section */}
-                                                    </div>
+                                                                //edit mode on
+                                                            <div>
+                                                                    <div>
+                                                                        <h1><input onChange={(e) => { this.handleTitleChange(e.target.value) }} value={this.state.title} /></h1>
+                                                                        {/* admin edit and delete buttons */}
+                                                                        <div>
+                                                                            {
+                                                                                this.props.isadmin === true ?
+                                                                                    <div>
+                                                                                        <button onClick={() => { this.toggleEdit() }}>Cancel</button>
+                                                                                        <button onClick={() => { }}>Delete</button>
+                                                                                    </div>
+                                                                                    :
+                                                                                    <div></div>
+                                                                            }
+                                                                        </div>
+                                                                        Posted by: {this.state.author}
+                                                                        <img src={this.state.profile_pic} alt="" />
+                                                                    </div>
+                                                                    <div>
+                                                                        {/* <Dropzone
+                                                                onDropAccepted={this.previewFile}
+                                                                style={{
+                                                                    position: 'relative',
+                                                                    width: 200,
+                                                                    height: 200,
+                                                                    borderWidth: 7,
+                                                                    marginTop: 100,
+                                                                    borderColor: 'rgb(102, 102, 102)',
+                                                                    borderStyle: 'dashed',
+                                                                    borderRadius: 5,
+                                                                    display: 'flex',
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    fontSize: 28,
+                                                                }}
+                                                                accept='image/*'
+                                                                multiple={true} >
+    
+                                                                {this.state.isUploading
+                                                                    ? <GridLoader />
+                                                                    : <p>Drop File or Click Here</p>
+                                                                }
+                                                            </Dropzone>
+                                                            <ol>
+                                                                {imageList}
+                                                            </ol> */}
+                                                                        {photoReel}
+                                                                        <p><textarea onChange={(e) => { this.handleContentChange(e.target.value) }} value={this.state.content} /></p>
+                                                                        <button onClick={() => { this.saveChanges() }}>Save Changes</button>
+                                                                    </div>
+                                                                </div>
+                                                                }
+                                                </div>
+                                                            :
+                                                            <div>
+                                                                You have not been approved to view this page.
+                            </div>
+                                                    }
                                                 </div>
                                                 :
-                                                //edit mode on
-                                                <div>
-                                                    <div>
-                                                        <h1><input onChange={(e) => { this.handleTitleChange(e.target.value) }} value={this.state.title} /></h1>
-                                                        {/* admin edit and delete buttons */}
-                                                        <div>
-                                                            {
-                                                                this.props.isadmin === true ?
-                                                                    <div>
-                                                                        <button onClick={() => { this.toggleEdit() }}>Cancel</button>
-                                                                        <button onClick={() => { }}>Delete</button>
-                                                                    </div>
-                                                                    :
-                                                                    <div></div>
-                                                            }
-                                                        </div>
-                                                        Posted by: {this.state.author}
-                                                        <img src={this.state.profile_pic} alt="" />
-                                                    </div>
-                                                    <div>
-                                                        {/* <Dropzone
-                                                            onDropAccepted={this.previewFile}
-                                                            style={{
-                                                                position: 'relative',
-                                                                width: 200,
-                                                                height: 200,
-                                                                borderWidth: 7,
-                                                                marginTop: 100,
-                                                                borderColor: 'rgb(102, 102, 102)',
-                                                                borderStyle: 'dashed',
-                                                                borderRadius: 5,
-                                                                display: 'flex',
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                fontSize: 28,
-                                                            }}
-                                                            accept='image/*'
-                                                            multiple={true} >
-
-                                                            {this.state.isUploading
-                                                                ? <GridLoader />
-                                                                : <p>Drop File or Click Here</p>
-                                                            }
-                                                        </Dropzone>
-                                                        <ol>
-                                                            {imageList}
-                                                        </ol> */}
-                                                        {photoReel}
-                                                        <p><textarea onChange={(e) => { this.handleContentChange(e.target.value) }} value={this.state.content} /></p>
-                                                        <button onClick={() => { this.saveChanges() }}>Save Changes</button>
-                                                    </div>
-                                                </div>
+                                                <h1 className='flex-post-preview'>Loading...</h1>
                                         }
+
                                     </div>
+
                                     :
                                     <div>
-                                        You have not been approved to view this page.
-                        </div>
-                            }
-                        </div>
-                        :
-                        <div>
-                            {
-                                this.props.approved || this.props.isadmin === true ?
-                                    <div>
-                                        This page does not exist
+                                        {
+                                            this.props.approved || this.props.isadmin === true ?
+                                                <div>
+                                                    This page does not exist
                             </div>
-                                    :
-                                    <div>
-                                        You have not been approved to view this page.
+                                                :
+                                                <div>
+                                                    You have not been approved to view this page.
                     </div>
 
+                                        }
+                                    </div>
+
+
                             }
+
                         </div>
-
-
-                }
-
-            </div>
         )
-    }
-}
-
+                }
+            }
+            
 function mapStateToProps(state) {
     return {
-        user_id: state.user_id,
-        approved: state.approved,
-        isadmin: state.isadmin
-    }
-}
-
-export default connect(mapStateToProps, { updateUser })(Post);
+                    user_id: state.user_id,
+                approved: state.approved,
+                isadmin: state.isadmin
+            }
+        }
+        
+export default connect(mapStateToProps, {updateUser})(Post);

@@ -198,15 +198,15 @@ class Settings extends Component {
 
     render() {
         return (
-            <div className='AuthContainer'>
-            <h1> Update your information here </h1>
-                <div className='input-box'>
+            <div className='desktop-body'>
+                <h1 className='header'> Update your information here </h1>
+                <div className='input-box settings-box'>
                     <h3>Email:</h3>
-                <input onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
+                    <input onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
                 </div>
-                <div className='input-box'>
-                <h3>Password:</h3>
-                <input onChange={(e) => { this.handleUpdateCurrentPassword(e.target.value) }} value={this.state.currentPassword} type='password' />
+                <div className='input-box settings-box'>
+                    <h3>Password:</h3>
+                    <input onChange={(e) => { this.handleUpdateCurrentPassword(e.target.value) }} value={this.state.currentPassword} type='password' />
                 </div>
                 {/* <input type='checkbox' onChange={() => { this.handleTikUpdate() }} />I'd like to change my password */}
                 {/* {
@@ -221,40 +221,46 @@ class Settings extends Component {
                         <div></div>
 
                 } */}
-                <div className='input-box'>
-                <h3>Display Name:</h3>
-                <input onChange={(e) => { this.handleUpdateDisplayName(e.target.value) }} value={this.state.display_name} />
+                <div className='input-box settings-box'>
+                    <h3>Display Name:</h3>
+                    <input onChange={(e) => { this.handleUpdateDisplayName(e.target.value) }} value={this.state.display_name} />
                 </div>
-                <div className='input-box'>
-                <h3>Profile Picture:</h3>
-                <img className='profile_pic' src={this.state.preview} alt="" />
-                </div>
-                    <Dropzone
-                    className='Dropzone'
-                        onDropAccepted={this.previewFile}
-                        accept='image/*'
-                        multiple={false} >
+                <div className='settingsContainer'>
 
-                        {this.state.isUploading
-                            ? <GridLoader />
-                            : <p>Drop File or Click Here</p>
-                        }
-                    </Dropzone>
-                    <button onClick={() => { this.sendUpdateToServer() }}>Save Changes</button>
 
+                    <div className='input-box'>
+                        <h3>Profile Picture:</h3>
+                        <img className='profile_pic' src={this.state.preview} alt="" />
+                    </div>
+                    <div>
+                        <Dropzone
+                            className='Dropzone'
+                            onDropAccepted={this.previewFile}
+                            accept='image/*'
+                            multiple={false} >
+
+                            {this.state.isUploading
+                                ? <GridLoader />
+                                : <p>Drop File or Click Here</p>
+                            }
+                        </Dropzone>
+                    </div>
+                    <div>
+                        <button onClick={() => { this.sendUpdateToServer() }}>Save Changes</button>
+                    </div>
                 </div>
-                )
-            }
-        }
-        
+            </div>
+        )
+    }
+}
+
 function mapStateToProps(state) {
-                    console.log(state)
     return {
-                    user_id: state.user_id,
-                profile_pic: state.profile_pic,
-                display_name: state.display_name,
-                email: state.email
-            }
-        }
-        
-export default connect(mapStateToProps, {updateUser})(Settings)
+        user_id: state.user_id,
+        profile_pic: state.profile_pic,
+        display_name: state.display_name,
+        email: state.email
+    }
+}
+
+export default connect(mapStateToProps, { updateUser })(Settings)

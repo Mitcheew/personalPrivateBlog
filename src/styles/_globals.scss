@@ -1,7 +1,7 @@
 // TABLE OF CONTENTS
 
 // 1. reset
-// 2. colors
+// 2. variables
 // 3. mixins
 // 4. functions
 // 5. globals
@@ -54,13 +54,13 @@ table {
 }
 
 
-// ===== 2. COLORS ===== //
-
-$light: #EEE;
-$medium: #999;
-$dark: #222;
-
-$font-color: #444;
+// ===== 2. VARIABLES ===== //
+$white: rgba(71, 71, 71, 0.205);
+$light: #F18805;
+$medium: #D95D39;
+$dark: #202C59;
+$side-nav: 160px;
+$font-color: #F0A202;
 
 // ===== 3. MIXINS ===== //
 
@@ -81,19 +81,23 @@ $font-color: #444;
 
 // ===== 5. GLOBALS ===== //
 @import url('https://fonts.googleapis.com/css?family=Oswald:700');
+body {
+	background: $medium;
+	box-sizing: border-box;
+}
 h1 {
   font: {
     family: 'Oswald', sans-serif;
-		size: 36px;
+	size: 36px;
   }
-		margin: 5px auto;
+	margin: 0px auto;
 }
 h2 {
   font: {
-    family: 'Oswald', sans-serif;
-		size: 24px;
+	family: 'Oswald', sans-serif;
+	size: 24px;
   }
-		margin: 5px auto;
+	margin: 5px auto;
 
 }
 
@@ -111,10 +115,6 @@ button{
 	padding: 2px 10px;
 	margin: 10px 0px
 }
-
-body {
-  background: $light;
-}
 .profile_pic {
 	width: 30px;
 	border-radius: 25%;
@@ -122,13 +122,18 @@ body {
 .Dropzone {
 	width: 100px;
 	height: 100px;
+	max-width: 100px;
+	max-height: 100px;
+	box-sizing: border-box;
 	border-width: 3px;
-	margin-top: 10px;
-	border-color: rgb(102, 102, 102);
+	margin: 10px 0;
+	border-color: $white;
+	background: $light;
 	border-style: solid;
 	border-radius: 5px;
-	@include flexo();
+	@include flexo(column);
 	font-size: 28px;
+	overflow: hidden;
 
 }
 .center-slide {
@@ -147,25 +152,77 @@ body {
 			margin-right: 3px;
 		}
 }
+.new-post-upload {
+	@include flexo(row, flex-start, flex-end);
+}
+.title {
+	width: 80%;
+}
 .post-container {
-	background-color: $medium;
+	background-color: $white;
 	margin-top: 15px;
 	border: 2px black solid;
 	border-radius: 7px;
+	text-decoration: none;
+}
+.settings-box {
+	position: relative;
+	width: 290px;
+}
+.header {
+	position: relative;
+	margin-top: 50px;
 }
 .input-box {
-		input {
-				border: 1px solid $medium;
-				margin-bottom: 5px;
-				padding: .3em .5em;
-				border-radius: 5px;
-				overflow: hidden;
-		}
-		textarea {
-			width: 250px;
-			height: 150px;
-			max-width: 250px;
-			max-height: 200px;
-
-		}
+		@include flexo(row, flex-end);
+	input {
+		border: 1px solid $dark;
+		margin-bottom: 5px;
+		padding: .3em .5em;
+		border-radius: 5px;
+		overflow: hidden;
+	}
+	textarea {
+		min-width: 250px;
+		max-width: 600px;
+		max-height: 200px;
+		width: 80%;
+		height: 150px;
+		border: 1px solid $dark;
+		margin: 0 auto;
+	}
+	button {
+		margin: 10px auto;
+		width: 100px;
+	}
 }
+
+.post-preview {
+	margin: 0 auto;
+	max-width: 350px;
+	@include flexo();
+}
+@media only screen and (min-width: 751px) {
+	.desktop-body {
+		position: relative;
+		margin-left: $side-nav;
+		width: 60%;
+		margin-left: calc((100% - 60%)/1.5);
+		min-height: 100%;
+		padding: 5px 10px;
+		border: 1px black solid;
+		background: $white
+	}
+	.post-container {
+		width: 400px;
+		min-height: 200px;
+	}
+	.flex-post-preview{
+		@include flexo(row);
+	}
+}
+
+
+
+
+
