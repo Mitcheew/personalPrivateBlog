@@ -51,6 +51,14 @@ class Login extends Component {
             })
     }
 
+    pressEnter = (e) => {
+        
+            if(e.key === 'Enter'){
+                this.handleLogin();
+            }
+        
+    }
+
     render() {
         return (
             <div className='AuthContainer desktop-body'>
@@ -60,7 +68,7 @@ class Login extends Component {
                     <input placeholder='Username or Email' onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
                 </div>
                 <div className='input-box'>
-                    <input placeholder='Password' onChange={(e) => { this.handleUpdatePassword(e.target.value) }} value={this.state.password} type='password' />
+                    <input placeholder='Password' onKeyPress={(e) => {this.pressEnter(e)}} onChange={(e) => { this.handleUpdatePassword(e.target.value) }} value={this.state.password} type='password' />
                 </div>
                 <button type="submit" onClick={() => { this.handleLogin() }}>Login</button>
                 <a href='/#/register'>Click here to register</a>

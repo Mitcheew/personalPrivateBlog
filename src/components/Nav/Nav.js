@@ -14,6 +14,7 @@ class Nav extends Component {
     }
 
     componentDidMount() {
+        console.log(window.location.pathname)
         this.props.isDesktop();
         window.addEventListener("resize", this.props.isDesktop);
     }

@@ -199,7 +199,10 @@ class Settings extends Component {
     render() {
         return (
             <div className='desktop-body'>
+                <div className='settingsContainer'>
+
                 <h1 className='header'> Update your information here </h1>
+
                 <div className='input-box settings-box'>
                     <h3>Email:</h3>
                     <input onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
@@ -225,7 +228,6 @@ class Settings extends Component {
                     <h3>Display Name:</h3>
                     <input onChange={(e) => { this.handleUpdateDisplayName(e.target.value) }} value={this.state.display_name} />
                 </div>
-                <div className='settingsContainer'>
 
 
                     <div className='input-box'>

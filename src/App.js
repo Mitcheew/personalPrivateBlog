@@ -26,6 +26,7 @@ class App extends Component {
       axios.get(`/api/user-data`)
         .then((response) => {
           this.props.updateUser(response.data)
+          
         })
         .catch(() => {
           if (window.location.href === window.location.origin + '/#/register') {
@@ -35,6 +36,7 @@ class App extends Component {
           }
         })
     }
+    
   }
   
   

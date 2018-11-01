@@ -47,8 +47,8 @@ class Album extends Component {
         return (
             <div className='desktop-body'>
                 <h1 className='header'>Photo Album</h1>
-                {this.state.photos.length !== 0 ?
-                <div>
+                {/* {this.state.photos.length !== 0 ?
+                <div> */}
                     <Slider
                         asNavFor={this.state.nav2}
                         ref={slider => (this.slider1 = slider)}
@@ -71,13 +71,13 @@ class Album extends Component {
                     >
                         {photoReel}
                     </Slider>
-                    </div>
+                    {/* </div>
             :
                     <h1>Loading...</h1>
-                }
+                }*/}
 
 
-            </div>
+            </div> 
         )
     }
 }
