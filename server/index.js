@@ -17,7 +17,7 @@ const app = express();
 // app.get('*', (req, res) => {
 //     res.sendFile(path.join(__dirname, '../public/index.html'));
 // });
-app.use( express.static( `${__dirname}/../public` ) );
+app.use( express.static( `${__dirname}/../build` ) );
 // destructure from process.env
 const {
     SERVER_PORT,
