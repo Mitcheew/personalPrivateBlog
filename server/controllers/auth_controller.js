@@ -26,7 +26,6 @@ module.exports = {
                 }
                 // Passwords match
                 req.session.user = user;
-                console.log(req.session.user)
                 res.status(200).send(req.session.user)
             } else {
                 // Passwords don't match

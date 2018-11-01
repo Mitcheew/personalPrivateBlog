@@ -49,35 +49,39 @@ class Album extends Component {
                 <h1 className='header'>Photo Album</h1>
                 {/* {this.state.photos.length !== 0 ?
                 <div> */}
-                    <Slider
-                        asNavFor={this.state.nav2}
-                        ref={slider => (this.slider1 = slider)}
-                        {...settings}
-                    >
-                        {photoReel}
-                    </Slider>
-                    <Slider
-                        className='SliderPhotos'
-                        {...settings}
-                        asNavFor={this.state.nav1}
-                        ref={slider => (this.slider2 = slider)}
-                        slidesToShow={photoReel.length < 5 ?
-                            photoReel.length
-                            :
-                            5
-                        }
-                        swipeToSlide={true}
-                        focusOnSelect={true}
-                    >
-                        {photoReel}
-                    </Slider>
-                    {/* </div>
+                <Slider
+                    asNavFor={this.state.nav2}
+                    ref={slider => (this.slider1 = slider)}
+                    {...settings}
+                >
+                    {photoReel}
+                </Slider>
+                <Slider
+                    className='SliderPhotos'
+                    dots={false}
+                    lazyLoad={true}
+                    infinite={true}
+                    speed={500}
+                    slidesToScroll={1}
+                    asNavFor={this.state.nav1}
+                    ref={slider => (this.slider2 = slider)}
+                    slidesToShow={photoReel.length < 5 ?
+                        photoReel.length
+                        :
+                        5
+                    }
+                    swipeToSlide={true}
+                    focusOnSelect={true}
+                >
+                    {photoReel}
+                </Slider>
+                {/* </div>
             :
                     <h1>Loading...</h1>
                 }*/}
 
 
-            </div> 
+            </div>
         )
     }
 }

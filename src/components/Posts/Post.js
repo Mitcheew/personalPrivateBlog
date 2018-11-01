@@ -231,27 +231,27 @@ class Post extends Component {
                                                 <div>
                                                     {this.state.author ?
                                                         <div>
-                                                        <div className='header post-info'>
-    
-                                                            <h1>{this.state.title}</h1>
-                                                            {/* admin edit and delete buttons */}
-                                                            <div>
-                                                                {
-                                                                    this.props.isadmin === true ?
-                                                                        <div>
-                                                                            <button onClick={() => { this.toggleEdit() }}>Edit</button>
-                                                                            <button onClick={() => { this.deletePost() }}>Delete</button>
-                                                                        </div>
-                                                                        :
-                                                                        <div></div>
-                                                                }
+                                                            <div className='header post-info'>
+
+                                                                <h1>{this.state.title}</h1>
+                                                                {/* admin edit and delete buttons */}
+                                                                <div>
+                                                                    {
+                                                                        this.props.isadmin === true ?
+                                                                            <div>
+                                                                                <button onClick={() => { this.toggleEdit() }}>Edit</button>
+                                                                                <button onClick={() => { this.deletePost() }}>Delete</button>
+                                                                            </div>
+                                                                            :
+                                                                            <div></div>
+                                                                    }
+                                                                </div>
+                                                                <img className='profile_pic' src={this.state.profile_pic} alt="" />
                                                             </div>
-                                                            <img className='profile_pic' src={this.state.profile_pic} alt="" />
-                                                        </div>
-                                                        <div className='post-info'>
-                                                            <p>Posted date: {this.state.post_date}</p>
-                                                            <p>By:  {this.state.author}</p>
-                                                        </div>
+                                                            <div className='post-info'>
+                                                                <p>Posted date: {this.state.post_date}</p>
+                                                                <p>By:  {this.state.author}</p>
+                                                            </div>
 
                                                         </div>
                                                         :
@@ -259,13 +259,20 @@ class Post extends Component {
                                                     }
                                                     <div>
 
-                                                        <Slider {...settings}
+                                                        <Slider
                                                             asNavFor={this.state.nav2}
-                                                            ref={slider => (this.slider1 = slider)}>
+                                                            ref={slider => (this.slider1 = slider)}
+                                                            {...settings}
+                                                        >
                                                             {photoReel}
                                                         </Slider>
                                                         <Slider
                                                             className='SliderPhotos'
+                                                            dots={false}
+                                                            lazyLoad={true}
+                                                            infinite={true}
+                                                            speed={500}
+                                                            slidesToScroll={1}
                                                             asNavFor={this.state.nav1}
                                                             ref={slider => (this.slider2 = slider)}
                                                             slidesToShow={photoReel.length < 5 ?
