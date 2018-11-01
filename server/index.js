@@ -10,9 +10,13 @@ const aws = require('aws-sdk');
 const authController = require('./controllers/auth_controller');
 const albumController = require('./controllers/album_controller');
 const postController = require('./controllers/post_controller');
-
+// const path = require('path');
 // Initialize express app
 const app = express();
+
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../public/index.html'));
+// });
 app.use( express.static( `${__dirname}/../public` ) );
 // destructure from process.env
 const {
