@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { v4 as randomString } from 'uuid'
 import Dropzone from 'react-dropzone'
 import { GridLoader } from 'react-spinners'
+import Header from '../Nav/Header'
 
 class Register extends Component {
     constructor() {
@@ -157,8 +158,9 @@ class Register extends Component {
         const { preview } = this.state
         return (
             <div className='AuthContainer desktop-body'>
-                <img className='header' src={noImg} alt="" />
-                <h1>Ethan's Wonderful Life</h1>
+            <Header />
+                {/* <img className='header' src={noImg} alt="" /> */}
+                <h2>Register</h2>
                 <div className='input-box'>
                     <input placeholder='Username or Email' onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
                 </div>

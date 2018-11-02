@@ -1,7 +1,7 @@
 @import '../globals';
 
 .AuthContainer{
-    @include flexo(column);
+    @include flexo(column, flex-start, center);
 
 }
 .settingsContainer{

@@ -5,6 +5,7 @@ import { updateUser } from '../../ducks/reducer'
 import { v4 as randomString } from 'uuid'
 import Dropzone from 'react-dropzone'
 import { GridLoader } from 'react-spinners'
+import Header from '../Nav/Header'
 
 class Settings extends Component {
     constructor(props) {
@@ -93,20 +94,6 @@ class Settings extends Component {
         console.log(file)
     }
 
-    previewFile = ([file]) => {
-        const currentFile = file
-        const reader = new FileReader()
-        reader.addEventListener("load", () => {
-            this.setState({
-                preview: reader.result,
-                file: file
-            })
-        }, false)
-
-        reader.readAsDataURL(currentFile)
-        console.log(file)
-    }
-
     getSignedRequest = (file) => {
         console.log(file)
         this.setState({ isUploading: true })
@@ -164,10 +151,15 @@ class Settings extends Component {
     }
     sendUpdateToServer() {
         const { file } = this.state;
+        let { email, currentPassword, profile_pic, display_name } = this.state
+
         if (this.state.preview !== this.props.profile_pic) {
+            if (!email || !currentPassword || !display_name) {
+                window.alert('Fill out all information fields!')
+            } else {
             this.getSignedRequest(file);
+            }
         } else {
-            let { email, currentPassword, profile_pic, display_name } = this.state
             if (!email || !currentPassword || !display_name) {
                 window.alert('Fill out all information fields!')
             } else {
@@ -199,20 +191,21 @@ class Settings extends Component {
     render() {
         return (
             <div className='desktop-body'>
+                <Header />
                 <div className='settingsContainer'>
 
-                <h1 className='header'> Update your information here </h1>
+                    <h1 className='header'> Update your information here </h1>
 
-                <div className='input-box settings-box'>
-                    <h3>Email:</h3>
-                    <input onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
-                </div>
-                <div className='input-box settings-box'>
-                    <h3>Password:</h3>
-                    <input onChange={(e) => { this.handleUpdateCurrentPassword(e.target.value) }} value={this.state.currentPassword} type='password' />
-                </div>
-                {/* <input type='checkbox' onChange={() => { this.handleTikUpdate() }} />I'd like to change my password */}
-                {/* {
+                    <div className='input-box settings-box'>
+                        <h3>Email:</h3>
+                        <input onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
+                    </div>
+                    <div className='input-box settings-box'>
+                        <h3>Password:</h3>
+                        <input onChange={(e) => { this.handleUpdateCurrentPassword(e.target.value) }} value={this.state.currentPassword} type='password' />
+                    </div>
+                    {/* <input type='checkbox' onChange={() => { this.handleTikUpdate() }} />I'd like to change my password */}
+                    {/* {
                     this.state.change === true ?
                         <div>
                             New Password:
@@ -224,10 +217,10 @@ class Settings extends Component {
                         <div></div>
 
                 } */}
-                <div className='input-box settings-box'>
-                    <h3>Display Name:</h3>
-                    <input onChange={(e) => { this.handleUpdateDisplayName(e.target.value) }} value={this.state.display_name} />
-                </div>
+                    <div className='input-box settings-box'>
+                        <h3>Display Name:</h3>
+                        <input onChange={(e) => { this.handleUpdateDisplayName(e.target.value) }} value={this.state.display_name} />
+                    </div>
 
 
                     <div className='input-box'>

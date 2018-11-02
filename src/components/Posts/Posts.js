@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { updateUser } from '../../ducks/reducer'
 import { Link } from 'react-router-dom'
+import Header from '../Nav/Header'
 
 class Posts extends Component {
     constructor() {
@@ -35,7 +36,7 @@ class Posts extends Component {
     render() {
         let allPosts = this.state.posts.map((post) => {
             return (
-                <div className='flex-post-preview' key={post.post_id}>
+                <div key={post.post_id}>
                     <div className='post-container'>
                         <Link to={`/post/${post.post_id}`}>
                             <div className='post-info'>
@@ -63,9 +64,12 @@ class Posts extends Component {
         });
         return (
             <div className='desktop-body'>
+                <Header />
                 <h1 className='header'>Most Recent Posts</h1>
                 {this.state.posts.length > 0 ?
-                    allPosts
+                    <div id='flex-post-container'>
+                        {allPosts}
+                    </div>
                     :
                     <div>
                         {this.state.isPosts ?

@@ -4,6 +4,7 @@ import { updateUser } from '../../ducks/reducer'
 import { connect } from 'react-redux'
 import Slider from 'react-slick'
 import { v4 as randomString } from 'uuid'
+import Header from '../Nav/Header'
 // import Dropzone from 'react-dropzone'
 // import { GridLoader } from 'react-spinners'
 
@@ -220,6 +221,7 @@ class Post extends Component {
         // })
         return (
             <div className='desktop-body'>
+                <Header />
                 {
                     this.state.exists === true ?
                         <div className='post-container-desktop'>
@@ -266,6 +268,7 @@ class Post extends Component {
                                                         >
                                                             {photoReel}
                                                         </Slider>
+
                                                         <Slider
                                                             className='SliderPhotos'
                                                             dots={false}
@@ -283,7 +286,11 @@ class Post extends Component {
                                                             swipeToSlide={true}
                                                             focusOnSelect={true}
                                                         >
-                                                            {photoReel}
+                                                            {photoReel.length > 1 ?
+                                                                photoReel
+                                                                :
+                                                                null
+                                                            }
                                                         </Slider>
                                                         <p>{this.state.content}</p>
                                                     </div>

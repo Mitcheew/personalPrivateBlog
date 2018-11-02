@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { v4 as randomString } from 'uuid'
 import Dropzone from 'react-dropzone'
 import { GridLoader } from 'react-spinners'
+import Header from '../Nav/Header'
 
 class NewPost extends Component {
     constructor() {
@@ -42,7 +43,7 @@ class NewPost extends Component {
     handleNewPost() {
         let { title, image, content, post_date, publish } = this.state;
         let { user_id } = this.props
-        if (image.length > 0 || title || content) {
+        if (image.length > 0 && title && content) {
             axios.post(`/api/post`, { title, image, content, publish, post_date, user_id })
                 .then(response => {
                     console.log(response.data)
@@ -120,6 +121,7 @@ class NewPost extends Component {
         })
         return (
             <div className='desktop-body'>
+            <Header />
                 <h1 className='header'> New Post </h1>
                 <div className='input-box'>
                     Title:

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Slider from 'react-slick'
 import axios from 'axios';
+import Header from '../Nav/Header'
 
 class Album extends Component {
     constructor() {
@@ -46,6 +47,7 @@ class Album extends Component {
         })
         return (
             <div className='desktop-body'>
+            <Header />
                 <h1 className='header'>Photo Album</h1>
                 {/* {this.state.photos.length !== 0 ?
                 <div> */}

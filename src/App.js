@@ -49,7 +49,7 @@ class App extends Component {
           <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" /> */}
 
               <Nav />
-          
+              {/* <Header /> */}
           <Switch>
             <Route exact path='/' component={Posts} />
             <Route path='/post/:post_id' component={Post} />

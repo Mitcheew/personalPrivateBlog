@@ -55,7 +55,7 @@ table {
 
 
 // ===== 2. VARIABLES ===== //
-$white: rgba(71, 71, 71, 0.205);
+$white: rgba(233, 233, 233, 0.205);
 $light: #F18805;
 $medium: #D95D39;
 $dark: #202C59;
@@ -121,6 +121,8 @@ button:hover {
 }
 .profile_pic {
 	width: 30px;
+	height: 30px;
+	object-fit: cover;
 	border-radius: 25%;
 }
 .Dropzone {
@@ -144,6 +146,9 @@ button:hover {
 	position: relative;
 	@include flexo(row, center, center);
 }
+a {
+	text-decoration: none;
+}
 .post-info {
 	@include flexo(row, space-between, center);
 	p {
@@ -163,19 +168,26 @@ button:hover {
 	width: 80%;
 }
 .post-container {
-	background-color: $white;
+	h2 {
+		color: $dark;
+	}
 	margin-top: 15px;
 	border: 2px black solid;
 	border-radius: 7px;
-	text-decoration: none;
 }
+.post-container:active{
+	background-color: $white;
+	h2 {
+		color: $medium;
+	}
+	}
 .settings-box {
 	position: relative;
 	width: 290px;
 }
 .header {
 	position: relative;
-	margin-top: 50px;
+	margin-bottom: 50px;
 }
 .input-box {
 		@include flexo(row, flex-end);
@@ -206,6 +218,24 @@ button:hover {
 	max-width: 350px;
 	@include flexo();
 }
+.desktop-body {
+	background: $white;
+	min-height: calc(100% - 50px);
+}
+.header-background {
+	margin-top: 50px;
+	margin-bottom: 10px;
+	height: 200px;
+	width: 100%;
+	background-image: url('../images/mt_timpanogos.jpg');
+	background-size: cover;
+	background-position: center;
+	h1 {
+		background-color: $white;
+		display: flex;
+		justify-content: center;
+	}
+}
 @media only screen and (min-width: 751px) {
 	.desktop-body {
 		position: relative;
@@ -214,15 +244,20 @@ button:hover {
 		margin-left: calc((100% - 60%)/1.5);
 		min-height: 100%;
 		padding: 5px 10px;
-		border: 1px black solid;
-		background: $white
+		box-sizing: border-box;
 	}
 	.post-container {
 		width: 400px;
 		min-height: 200px;
 	}
-	.flex-post-preview{
-		@include flexo(row);
+	#flex-post-container{
+		position: relative;
+		@include flexo(row, space-around, flex-start);
+		flex-wrap: wrap;
+
+	}
+	.header-background {
+		margin-top: 0px;
 	}
 }
 

@@ -3,6 +3,7 @@ import noImg from '../../images/noImage.jpg'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { updateUser } from '../../ducks/reducer'
+import Header from '../Nav/Header'
 
 class Login extends Component {
     constructor() {
@@ -62,8 +63,9 @@ class Login extends Component {
     render() {
         return (
             <div className='AuthContainer desktop-body'>
-                <img className='header' src={noImg} alt="" />
-                <h1>Ethan's Wonderful Life</h1>
+            <Header />
+                {/* <img className='header' src={noImg} alt="" /> */}
+                <h2>Login</h2>
                 <div className='input-box'>
                     <input placeholder='Username or Email' onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
                 </div>
