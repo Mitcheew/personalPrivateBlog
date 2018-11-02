@@ -56,21 +56,22 @@
 
   .nav-line {
     @include flexo();
+    margin: 7px 0;
     img {
       width: 30px;
       margin-right: 3px;
     }
-    a{
+  .menu-item {
       text-decoration: none;
-      height: 29.59px;
-      margin-bottom: 5px;
-    }
+      height: 27.594px;
+  }
     button {
         border: 1px solid;
         padding: .3em .5em;
         border-radius: 5px;
         overflow: hidden;
         width: 120px;
+        margin: 0;
       font-weight: bold;
     }
 
@@ -92,7 +93,7 @@
     border-width: 3px;
     border-right: $white;
     p {
-      color: $light;
+      color: white;
     }
     div {
       margin-top: 10px;

@@ -1,6 +1,6 @@
 /* Slider */
 // ===== Slick ===== //
-
+@import './globals';
 .slick-slider
 {
     position: relative;
@@ -26,7 +26,6 @@
     position: relative;
     display: block;
     overflow: hidden;
-
     margin: 0;
     padding: 0;
 }
@@ -76,9 +75,9 @@
 
 .slick-slide
 {
-    display: none;
+    display: flex;
+    align-self: center;
     float: left;
-
     height: 100%;
     min-height: 1px;
 }
@@ -90,7 +89,7 @@
 {
     display: block;
     max-height: 300px;
-    max-width: 100%
+    max-width: 100%;
 }
 .slick-slide.slick-loading img
 {
@@ -351,8 +350,8 @@
 
     .slick-slide img
 {
+    height: 100%;
     max-height: 50px;
-    max-width: 50px;
     overflow: hidden;
 }
     

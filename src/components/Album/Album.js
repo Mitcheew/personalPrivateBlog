@@ -30,7 +30,7 @@ class Album extends Component {
             dots: false,
             lazyLoad: true,
             infinite: true,
-            speed: 500,
+            speed: 100,
             slidesToShow: 1,
             slidesToScroll: 1
 
@@ -61,7 +61,7 @@ class Album extends Component {
                     dots={false}
                     lazyLoad={true}
                     infinite={true}
-                    speed={500}
+                    speed={100}
                     slidesToScroll={1}
                     asNavFor={this.state.nav1}
                     ref={slider => (this.slider2 = slider)}
