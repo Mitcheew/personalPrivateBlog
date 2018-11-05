@@ -23,7 +23,7 @@ class Register extends Component {
 
     componentDidMount() {
         if (this.props.user_id === 0) {
-            window.location = '/#/register'
+            this.props.history.push(`/register`)
         }
     }
 
@@ -71,7 +71,7 @@ class Register extends Component {
                         let { display_name, profile_pic, user_id, email, approved, isadmin } = response.data;
                         console.log(response)
                         this.props.updateUser({ display_name, profile_pic, user_id, email, approved, isadmin })
-                        window.location = '/#/'
+                        this.props.history.push(`/`)
                     })
                     .catch((err) => {
                         console.log(err)
@@ -136,7 +136,7 @@ class Register extends Component {
                         let { display_name, profile_pic, user_id, email, approved, isadmin } = response.data;
                         console.log(response)
                         this.props.updateUser({ display_name, profile_pic, user_id, email, approved, isadmin })
-                        window.location = '/#/'
+                        this.props.history.push(`/`)
                     })
                     .catch((err) => {
                         console.log(err)

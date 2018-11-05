@@ -47,7 +47,7 @@ class NewPost extends Component {
             axios.post(`/api/post`, { title, image, content, publish, post_date, user_id })
                 .then(response => {
                     console.log(response.data)
-                    window.location = `/#/post/${response.data.postId}`
+                    this.props.history.push(`/post/${response.data.postId}`)
                 })
 
         } else {
@@ -121,7 +121,7 @@ class NewPost extends Component {
         })
         return (
             <div className='desktop-body'>
-            <Header />
+                <Header />
                 <h1 className='header'> New Post </h1>
                 <div className='input-box'>
                     Title:

@@ -106,7 +106,7 @@ class Post extends Component {
             axios.delete(`/api/post/${Number(loc[1])}`)
                 .then(() => {
                     window.alert('Post successfully deleted')
-                    window.location = '/#/'
+                    this.props.history.push(`/`)
                 })
 
         }

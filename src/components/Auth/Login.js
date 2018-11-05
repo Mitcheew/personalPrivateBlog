@@ -15,7 +15,7 @@ class Login extends Component {
 
     componentDidMount() {
         if (this.props.user_id > 0) {
-            window.location = '/#/'
+            this.props.history.push(`/`)
         }
     }
 
@@ -38,7 +38,7 @@ class Login extends Component {
             .then((response) => {
                 let { display_name, profile_pic, user_id, email, approved, isadmin } = response.data;
                 this.props.updateUser({ display_name, profile_pic, user_id, email, approved, isadmin })
-                window.location = '/#/'
+                this.props.history.push(`/`)
             })
             .catch((err) => {
                 console.log(err)

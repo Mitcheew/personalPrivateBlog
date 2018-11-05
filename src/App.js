@@ -32,7 +32,7 @@ class App extends Component {
           if (window.location.href === window.location.origin + '/#/register') {
 
           } else {
-            window.location = '/#/login'
+            this.props.history.push(`/login`)
           }
         })
     }

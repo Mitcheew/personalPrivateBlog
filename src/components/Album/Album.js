@@ -8,16 +8,19 @@ class Album extends Component {
         super()
         this.state = {
             photos: [],
-            nav1: null,
-            nav2: null
+            // nav1: null,
+            // nav2: null
         }
+        this.nav1 = React.createRef()
+        this.nav2 = React.createRef()
+
     }
 
     componentDidMount() {
-        this.setState({
-            nav1: this.slider1,
-            nav2: this.slider2
-        })
+        // this.setState({
+        //     nav1: this.slider1,
+        //     nav2: this.slider2
+        // })
         axios.get(`/api/photos`)
             .then(response => {
                 this.setState({
@@ -50,15 +53,15 @@ class Album extends Component {
                 {/* {this.state.photos.length !== 0 ?
                 <div> */}
                 <Slider
-                    asNavFor={this.state.nav2}
-                    ref={slider => (this.slider1 = slider)}
+                    asNavFor={this.nav2.current}
+                    ref={this.nav1}
                     {...settings}
                 >
                     {photoReel}
                 </Slider>
                 <Slider
-                    asNavFor={this.state.nav1}
-                    ref={slider => (this.slider2 = slider)}
+                    asNavFor={this.nav1.current}
+                    ref={this.nav2}
                     className='SliderPhotos'
                     dots={false}
                     lazyLoad={true}

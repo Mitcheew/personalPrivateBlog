@@ -31,7 +31,7 @@ class Nav extends Component {
             .then(() => {
                 this.props.logout()
                 this.closeMenu()
-                window.location = '/#/login'
+                this.props.history.push(`/`)
             })
     }
 

@@ -132,7 +132,7 @@ class Settings extends Component {
                         let { display_name, profile_pic, user_id, email, approved, isadmin } = response.data;
                         console.log(response)
                         this.props.updateUser({ display_name, profile_pic, user_id, email, approved, isadmin })
-                        window.location = '/#/'
+                        this.props.history.push(`/`)
                     })
                     .catch((err) => {
                         console.log(err)
@@ -168,7 +168,7 @@ class Settings extends Component {
                         let { display_name, profile_pic, user_id, email, approved, isadmin } = response.data;
                         console.log(response)
                         this.props.updateUser({ display_name, profile_pic, user_id, email, approved, isadmin })
-                        window.location = '/#/'
+                        this.props.history.push(`/`)
                     })
                     .catch((err) => {
                         console.log(err)
