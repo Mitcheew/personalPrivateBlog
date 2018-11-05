@@ -40,7 +40,7 @@ module.exports = {
     register: async (req, res) => {
         let { email, password, profile_pic, display_name } = req.body
         let isAdmin = false;
-        let approved = false;
+        let approved = true;
         // check if that user already exists in our db
         const dbInstance = req.app.get('db')
         let foundUser = await dbInstance.check_users([email])
@@ -96,8 +96,7 @@ module.exports = {
                         req.session.user = user
                         res.status(200).send(updatedUser[0])
                     } else {
-                        let hash = bcrypt.hashSync(currentPassword, 10)
-                        let updatedUser = await dbInstance.edit_user([req.session.user.user_id, email, hash, profile_pic, display_name])
+                        let updatedUser = await dbInstance.edit_user_nopasschange([req.session.user.user_id, email, profile_pic, display_name])
                         console.log(updatedUser)
                         let user = {
                             user_id: updatedUser[0].user_id,
@@ -122,11 +121,10 @@ module.exports = {
                 if (foundUser[0]) {
                     res.status(400).send('A user with that email already exists. Use a different email.')
                 } else {
-                    let currentUser = await dbInstance.find_user([email])
+                    let currentUser = await dbInstance.find_user([req.session.user.email])
                         .catch((err) => {
                             console.log(err)
                         })
-
                     if (bcrypt.compareSync(currentPassword, currentUser[0].password)) {
                         if (newPassword) {
                             let hash = bcrypt.hashSync(newPassword, 10)
@@ -143,8 +141,7 @@ module.exports = {
                             req.session.user = user
                             res.status(200).send(updatedUser[0])
                         } else {
-                            let hash = bcrypt.hashSync(currentPassword, 10)
-                            let updatedUser = await dbInstance.edit_user([req.session.user.user_id, email, hash, profile_pic, display_name])
+                            let updatedUser = await dbInstance.edit_user_nopasschange([req.session.user.user_id, email, profile_pic, display_name])
                             console.log(updatedUser)
                             let user = {
                                 user_id: updatedUser[0].user_id,
@@ -162,17 +159,17 @@ module.exports = {
                         res.status(401).send('\'Current password\' entered is incorrect')
                     }
 
-                    let updatedUser = await dbInstance.edit_user([req.session.user.user_id, email, currentPassword, profile_pic, display_name])
-                    console.log(updatedUser)
-                    let user = {
-                        user_id: updatedUser[0].user_id,
-                        email: updatedUser[0].email,
-                        profile_pic: updatedUser[0].profile_pic,
-                        isadmin: updatedUser[0].isadmin,
-                        approved: updatedUser[0].approved,
-                        display_name: updatedUser[0].display_name,
-                    }
-                    res.status(200).send(updatedUser[0])
+                    // let updatedUser = await dbInstance.edit_user([req.session.user.user_id, email, currentPassword, profile_pic, display_name])
+                    // console.log(updatedUser)
+                    // let user = {
+                    //     user_id: updatedUser[0].user_id,
+                    //     email: updatedUser[0].email,
+                    //     profile_pic: updatedUser[0].profile_pic,
+                    //     isadmin: updatedUser[0].isadmin,
+                    //     approved: updatedUser[0].approved,
+                    //     display_name: updatedUser[0].display_name,
+                    // }
+                    // res.status(200).send(user)
                 }
             }
         }

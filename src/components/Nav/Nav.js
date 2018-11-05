@@ -14,7 +14,6 @@ class Nav extends Component {
     }
 
     componentDidMount() {
-        console.log(window.location.pathname)
         this.props.isDesktop();
         window.addEventListener("resize", this.props.isDesktop);
     }
@@ -48,7 +47,7 @@ class Nav extends Component {
                     <div>
                         <div className='nav-line'>
     
-                            <img src={this.props.profile_pic} alt="" />
+                            <img className='profile_pic' src={this.props.profile_pic} alt="" />
     
                             <p>{this.props.display_name}</p>
                         </div>
@@ -105,7 +104,7 @@ class Nav extends Component {
                 <div>
                     <div className='nav-line'>
 
-                        <img src={this.props.profile_pic} alt="" />
+                        <img className='profile_pic' src={this.props.profile_pic} alt="" />
 
                         <p>{this.props.display_name}</p>
                     </div>

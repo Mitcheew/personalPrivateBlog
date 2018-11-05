@@ -143,7 +143,6 @@ button:hover {
 
 }
 .center-slide {
-	position: relative;
 	@include flexo(row, center, center);
 }
 a {
@@ -183,7 +182,7 @@ a {
 	}
 .settings-box {
 	position: relative;
-	width: 290px;
+	width: 350px;
 }
 .header {
 	position: relative;
@@ -217,6 +216,11 @@ a {
 	margin: 0 auto;
 	max-width: 350px;
 	@include flexo();
+}
+.content-area {
+	background-color: $white;
+	padding: 10px;
+	box-sizing: border-box;
 }
 .desktop-body {
 	background: $white;

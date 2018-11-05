@@ -47,7 +47,6 @@ module.exports = {
         let { post_id } = req.params;
         const dbInstance = req.app.get('db')
         dbInstance.delete_post([ post_id ])
-        res.sendStatus(200)
         if (req.session.user && req.session.user.isadmin === true) {
             dbInstance.delete_post([ post_id ])
             res.sendStatus(200)

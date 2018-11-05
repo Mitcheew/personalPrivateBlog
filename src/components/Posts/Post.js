@@ -37,20 +37,18 @@ class Post extends Component {
                     })
                 } else {
                     let { title, content, display_name, profile_pic, post_date } = response.data.foundPost[0];
-                    let postImages = []
-                    response.data.postPhotos.forEach((image, i) => {
-                        postImages.push(image)
-                    })
+                    // let postImages = []
+                    // response.data.postPhotos.forEach((image, i) => {
+                    //     postImages.push(image)
+                    // })
 
                     this.setState({
                         title: title,
-                        image: postImages,
+                        image: response.data.postPhotos,
                         content: content,
                         author: display_name,
                         profile_pic: profile_pic,
-                        post_date: post_date,
-                        nav1: this.slider1,
-                        nav2: this.slider2
+                        post_date: post_date
                     })
                 }
             })
@@ -58,6 +56,8 @@ class Post extends Component {
                 console.log(err)
             })
         this.setState({
+            nav1: this.slider1,
+            nav2: this.slider2
         })
 
 
@@ -89,11 +89,12 @@ class Post extends Component {
     saveChanges() {
         let loc = this.props.location.pathname.split('/post/')
         let { title, content } = this.state
-        console.log(Number(loc[1]))
         axios.put(`/api/post/${Number(loc[1])}`, { title, content })
             .then(() => {
                 window.alert('Saved changes successfully!')
-                window.location.reload();
+                this.setState({
+                    edit: false
+                })
             })
     }
 
@@ -207,10 +208,8 @@ class Post extends Component {
         };
         let photoReel = this.state.image.map(photo => {
             return (
-                <div key={photo.photo_id}>
-                    <div className='center-slide'>
-                        <img src={photo.image} alt="" />
-                    </div>
+                <div className='center-slide' key={photo.photo_id}>
+                    <img className='post-preview' src={photo.image} alt="" />
                 </div>
             )
         })
@@ -259,7 +258,7 @@ class Post extends Component {
                                                         :
                                                         <h1>Loading...</h1>
                                                     }
-                                                    <div>
+                                                    <div className='content-area'>
 
                                                         <Slider
                                                             asNavFor={this.state.nav2}
@@ -268,11 +267,10 @@ class Post extends Component {
                                                         >
                                                             {photoReel}
                                                         </Slider>
-
                                                         <Slider
                                                             className='SliderPhotos'
                                                             dots={false}
-                                                            lazyLoad={true}
+                                                            lazyLoad={false}
                                                             infinite={true}
                                                             speed={100}
                                                             slidesToScroll={1}
@@ -286,11 +284,7 @@ class Post extends Component {
                                                             swipeToSlide={true}
                                                             focusOnSelect={true}
                                                         >
-                                                            {photoReel.length > 1 ?
-                                                                photoReel
-                                                                :
-                                                                null
-                                                            }
+                                                            {photoReel}
                                                         </Slider>
                                                         <p>{this.state.content}</p>
                                                     </div>
@@ -350,8 +344,40 @@ class Post extends Component {
                                         <ol>
                                             {imageList}
                                         </ol> */}
-                                                        {photoReel}
-                                                        <p><textarea onChange={(e) => { this.handleContentChange(e.target.value) }} value={this.state.content} /></p>
+                                                        <Slider
+                                                            asNavFor={this.state.nav2}
+                                                            ref={slider => (this.slider1 = slider)}
+                                                            {...settings}
+                                                        >
+                                                            {photoReel}
+                                                        </Slider>
+
+                                                        <Slider
+                                                            className='SliderPhotos'
+                                                            dots={false}
+                                                            lazyLoad={true}
+                                                            infinite={true}
+                                                            speed={100}
+                                                            slidesToScroll={1}
+                                                            asNavFor={this.state.nav1}
+                                                            ref={slider => (this.slider2 = slider)}
+                                                            slidesToShow={photoReel.length < 5 ?
+                                                                photoReel.length
+                                                                :
+                                                                5
+                                                            }
+                                                            swipeToSlide={true}
+                                                            focusOnSelect={true}
+                                                        >
+                                                            {photoReel.length > 1 ?
+                                                                photoReel
+                                                                :
+                                                                null
+                                                            }
+                                                        </Slider>
+                                                        <div className='input-box'>
+                                                            <textarea onChange={(e) => { this.handleContentChange(e.target.value) }} value={this.state.content} />
+                                                        </div>
                                                         <button onClick={() => { this.saveChanges() }}>Save Changes</button>
                                                     </div>
                                                 </div>

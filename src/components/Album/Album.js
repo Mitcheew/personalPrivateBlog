@@ -14,16 +14,16 @@ class Album extends Component {
     }
 
     componentDidMount() {
+        this.setState({
+            nav1: this.slider1,
+            nav2: this.slider2
+        })
         axios.get(`/api/photos`)
             .then(response => {
                 this.setState({
                     photos: response.data
                 })
             })
-        this.setState({
-            nav1: this.slider1,
-            nav2: this.slider2
-        })
     }
 
     render() {
@@ -38,16 +38,14 @@ class Album extends Component {
         };
         let photoReel = this.state.photos.map(photo => {
             return (
-                <div key={photo.photo_id}>
-                    <div className='center-slide'>
-                        <img src={photo.image} alt="" />
-                    </div>
+                <div className='center-slide' key={photo.photo_id}>
+                    <img className='post-preview' src={photo.image} alt="" />
                 </div>
             )
         })
         return (
             <div className='desktop-body'>
-            <Header />
+                <Header />
                 <h1 className='header'>Photo Album</h1>
                 {/* {this.state.photos.length !== 0 ?
                 <div> */}
@@ -59,14 +57,14 @@ class Album extends Component {
                     {photoReel}
                 </Slider>
                 <Slider
+                    asNavFor={this.state.nav1}
+                    ref={slider => (this.slider2 = slider)}
                     className='SliderPhotos'
                     dots={false}
                     lazyLoad={true}
                     infinite={true}
                     speed={100}
                     slidesToScroll={1}
-                    asNavFor={this.state.nav1}
-                    ref={slider => (this.slider2 = slider)}
                     slidesToShow={photoReel.length < 5 ?
                         photoReel.length
                         :

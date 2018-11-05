@@ -201,7 +201,7 @@ class Settings extends Component {
                         <input onChange={(e) => { this.handleUpdateEmail(e.target.value) }} value={this.state.email} />
                     </div>
                     <div className='input-box settings-box'>
-                        <h3>Password:</h3>
+                        <h3>Confirm Password:</h3>
                         <input onChange={(e) => { this.handleUpdateCurrentPassword(e.target.value) }} value={this.state.currentPassword} type='password' />
                     </div>
                     {/* <input type='checkbox' onChange={() => { this.handleTikUpdate() }} />I'd like to change my password */}

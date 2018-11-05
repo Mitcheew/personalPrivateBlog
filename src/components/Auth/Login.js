@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import noImg from '../../images/noImage.jpg'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { updateUser } from '../../ducks/reducer'
