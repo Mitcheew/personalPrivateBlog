@@ -84,7 +84,6 @@ module.exports = {
                     if (newPassword) {
                         let hash = bcrypt.hashSync(newPassword, 10)
                         let updatedUser = await dbInstance.edit_user([req.session.user.user_id, email, hash, profile_pic, display_name])
-                        console.log(updatedUser)
                         let user = {
                             user_id: updatedUser[0].user_id,
                             email: updatedUser[0].email,
@@ -97,7 +96,6 @@ module.exports = {
                         res.status(200).send(updatedUser[0])
                     } else {
                         let updatedUser = await dbInstance.edit_user_nopasschange([req.session.user.user_id, email, profile_pic, display_name])
-                        console.log(updatedUser)
                         let user = {
                             user_id: updatedUser[0].user_id,
                             email: updatedUser[0].email,
@@ -142,7 +140,6 @@ module.exports = {
                             res.status(200).send(updatedUser[0])
                         } else {
                             let updatedUser = await dbInstance.edit_user_nopasschange([req.session.user.user_id, email, profile_pic, display_name])
-                            console.log(updatedUser)
                             let user = {
                                 user_id: updatedUser[0].user_id,
                                 email: updatedUser[0].email,

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { logout, isDesktop } from '../../ducks/reducer'
 import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 
 class Nav extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ class Nav extends Component {
             .then(() => {
                 this.props.logout()
                 this.closeMenu()
-                this.props.history.push(`/`)
+                window.location = '/#/login'
             })
     }
 
@@ -165,4 +166,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { logout, isDesktop })(Nav)
+export default withRouter(connect(mapStateToProps, { logout, isDesktop })(Nav))

@@ -36,7 +36,8 @@ class Album extends Component {
             infinite: true,
             speed: 100,
             slidesToShow: 1,
-            slidesToScroll: 1
+            slidesToScroll: 1,
+            focusOnSelect: true
 
         };
         let photoReel = this.state.photos.map(photo => {
