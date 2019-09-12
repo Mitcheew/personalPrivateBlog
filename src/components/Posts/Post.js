@@ -28,8 +28,9 @@ class Post extends Component {
     }
 
     componentDidMount() {
-        let location = this.props.location.pathname.split('/post/')
-        axios.get(`/api/post/${Number(location[1])}`)
+        let location = this.props.match.params.post_id
+        console.log(location)
+        axios.get(`/api/post/${location}`)
             .then((response) => {
                 if (response.data.foundPost.length === 0) {
                     this.setState({
