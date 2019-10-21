@@ -5,10 +5,6 @@
   "main": "server/index.js",
   "build-css": "node-sass-chokidar src/ -o src/",
   "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-  "engines": {
-    "node": "10.15.3",
-    "npm": "6.4.1"
-  },
   "dependencies": {
     "aws-sdk": "^2.338.0",
     "axios": "^0.18.1",
@@ -40,7 +36,7 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",
-    "start": "npm-run-all watch-css start-js",
+    "start": "npm-run-all -p watch-css start-js",
     "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

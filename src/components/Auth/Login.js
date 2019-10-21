@@ -63,6 +63,7 @@ class Login extends Component {
         return (
             <div className='AuthContainer desktop-body'>
             <Header />
+            <h3>Username: guest, password: guest</h3>
                 {/* <img className='header' src={noImg} alt="" /> */}
                 <h2>Login</h2>
                 <div className='input-box'>
