@@ -5,6 +5,9 @@
   "main": "server/index.js",
   "build-css": "node-sass-chokidar src/ -o src/",
   "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+  "engines": {
+    "node": "10.15.3"
+  },
   "dependencies": {
     "aws-sdk": "^2.338.0",
     "axios": "^0.18.0",
