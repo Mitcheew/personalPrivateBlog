@@ -35,8 +35,8 @@ app.get('/sign-s3', (req, res) => {
 
   aws.config = {
     region: 'us-west-1',
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY
+    accessKeyId: REACT_APP_AWS_ACCESS_KEY_ID,
+    secretAccessKey: REACT_APP_AWS_SECRET_ACCESS_KEY
   }
 
   const s3 = new aws.S3();
@@ -57,7 +57,7 @@ app.get('/sign-s3', (req, res) => {
     }
     const returnData = {
       signedRequest: data,
-      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+      url: `https://${REACT_APP_S3_BUCKET}.s3.amazonaws.com/${fileName}`
     };
 
     return res.send(returnData)
@@ -65,7 +65,7 @@ app.get('/sign-s3', (req, res) => {
 });
 
 // connect to DB
-massive(CONNECTION_STRING)
+massive(REACT_APP_CONNECTION_STRING)
   .then(dbInstance => {
     app.set('db', dbInstance);
     console.log('Connected to the DB')
@@ -76,7 +76,7 @@ massive(CONNECTION_STRING)
 
 // middleware
 app.use(session({
-  secret: SECRET,
+  secret: REACT_APP_SECRET,
   resave: false,
   saveUninitialized: false
 }))
@@ -107,5 +107,5 @@ app.post(`/api/photos`, albumController.addPhoto)
 app.delete(`/api/photos/:photo_id`, albumController.deletePhoto)
 
 // listen
-app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`))
+app.listen(REACT_APP_SERVER_PORT, () => console.log(`Listening on port ${REACT_APP_SERVER_PORT}`))
 
