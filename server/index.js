@@ -20,6 +20,7 @@ const app = express();
 app.use(express.static(`${__dirname}/../build`));
 // destructure from process.env
 const {
+  PORT,
   REACT_APP_SERVER_PORT,
   REACT_APP_CONNECTION_STRING,
   REACT_APP_SECRET,
@@ -107,5 +108,5 @@ app.post(`/api/photos`, albumController.addPhoto)
 app.delete(`/api/photos/:photo_id`, albumController.deletePhoto)
 
 // listen
-app.listen(REACT_APP_SERVER_PORT, () => console.log(`Listening on port ${REACT_APP_SERVER_PORT}`))
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
 
