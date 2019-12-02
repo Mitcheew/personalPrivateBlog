@@ -1,7 +1,6 @@
 // require in dependencies
 if (process.env.NODE_ENV === 'development') { 
   require('dotenv').config() 
-  console.log(process.env.NODE_ENV)
 }
 const express = require('express');
 const session = require('express-session');
@@ -31,6 +30,8 @@ const {
   REACT_APP_AWS_ACCESS_KEY_ID,
   REACT_APP_AWS_SECRET_ACCESS_KEY
 } = process.env;
+
+  console.log(process.env.NODE_ENV, "Port:", PORT, "config port:", REACT_APP_SERVER_PORT)
 
 app.use(bodyParser.json());
 
@@ -111,5 +112,5 @@ app.post(`/api/photos`, albumController.addPhoto)
 app.delete(`/api/photos/:photo_id`, albumController.deletePhoto)
 
 // listen
-app.listen(PORT || REACT_APP_SERVER_PORT || 5000, () => console.log(`Listening on port ${PORT || REACT_APP_SERVER_PORT || 5000}`))
+app.listen(PORT || REACT_APP_SERVER_PORT || 80, () => console.log(`Listening on port ${PORT || REACT_APP_SERVER_PORT || 80}`))
 
