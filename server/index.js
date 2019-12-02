@@ -1,5 +1,8 @@
 // require in dependencies
-require('dotenv').config();
+if (process.env.NODE_ENV === 'development') { 
+  require('dotenv').config() 
+  console.log(process.env.NODE_ENV)
+}
 const express = require('express');
 const session = require('express-session');
 // const axios = require('axios');
