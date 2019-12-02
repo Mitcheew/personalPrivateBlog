@@ -111,5 +111,5 @@ app.post(`/api/photos`, albumController.addPhoto)
 app.delete(`/api/photos/:photo_id`, albumController.deletePhoto)
 
 // listen
-app.listen(REACT_APP_SERVER_PORT || 80, () => console.log(`Listening on port ${REACT_APP_SERVER_PORT || 80}`))
+app.listen(PORT || REACT_APP_SERVER_PORT || 5000, () => console.log(`Listening on port ${PORT || REACT_APP_SERVER_PORT || 5000}`))
 
