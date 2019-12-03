@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "build-css": "node-sass-chokidar src/ -o src/",
   "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-  "proxy": "https://mitcheew-personal-project.herokuapp.com:5000",
+  "proxy": "https://mitcheew-personal-project.herokuapp.com",
   "engines": {
     "node": "10.15.3",
     "npm": "6.4.1"
